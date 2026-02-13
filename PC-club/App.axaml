@@ -1,0 +1,26 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PC_club.App"
+             xmlns:local="using:PC_club"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+  
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="Styles/Styles1.axaml"></StyleInclude>
+    </Application.Styles>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="PrimaryText">#CFCFCF</SolidColorBrush>
+        <SolidColorBrush x:Key="SecondText">#ebebeb</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonHover">#a1a1a1</SolidColorBrush>
+        <SolidColorBrush x:Key="SecondTextHover">#ebe6e7</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryBackground">#121212</SolidColorBrush>
+        <SolidColorBrush x:Key="SideMenuPrimaryBackground">#212121</SolidColorBrush>
+    </Application.Resources>
+
+</Application>
