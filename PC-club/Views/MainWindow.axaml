@@ -1,4 +1,4 @@
-<Window xmlns="https://github.com/avaloniaui"
+﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:PC_club.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -20,17 +20,52 @@
             <Grid Background="{DynamicResource SideMenuPrimaryBackground}">
                  <StackPanel Spacing="8">
                      <TextBlock Text="Game Zone" FontSize="20" FontWeight="Bold" Margin="0,0,0,20" Foreground="White" />
-				     <Button Content="�������" HorizontalAlignment="Stretch"></Button>
-                     <Button Content="�볺��" HorizontalAlignment="Stretch"></Button>
-                     <Button Content="̳���" HorizontalAlignment="Stretch"></Button>
-                     <Button Content="������" HorizontalAlignment="Stretch"></Button>
-                     <Button Content="���" HorizontalAlignment="Stretch"></Button>
-                     <Button Content="����������" HorizontalAlignment="Stretch"></Button>
-                     <Button Content="������" HorizontalAlignment="Stretch"></Button>
+				     <Button Content="Головна" HorizontalAlignment="Stretch"></Button>
+                     <Button Content="Клієти" HorizontalAlignment="Stretch"></Button>
+                     <Button Content="Місця" HorizontalAlignment="Stretch"></Button>
+                     <Button Content="Графік" HorizontalAlignment="Stretch"></Button>
+                     <Button Content="Сесії" HorizontalAlignment="Stretch"></Button>
+                     <Button Content="Бронювання" HorizontalAlignment="Stretch"></Button>
+                     <Button Content="Тарифи" HorizontalAlignment="Stretch"></Button>
                   </StackPanel>
             </Grid>
         </Border>
-       
-    </Grid>
 
+       <Grid Grid.Column="1">
+           <Border Padding="24" Background="#0a0a0a">
+              <StackPanel>
+                 <StackPanel  Margin="0,0,0,24">
+                      <TextBlock Text="Головна панель" FontSize="24" Margin="0,0,0,4" Foreground="White"></TextBlock>
+                      <TextBlock Text="Огляд стану ігрового клубу" FontSize="14" Foreground="#6a7282"></TextBlock>  
+                  </StackPanel>
+                   <Grid>
+                       <UniformGrid Columns="4">
+						   <Grid>
+                               <Border Padding="16">
+                                     <TextBlock Text="Зайнято місць" FontSize="14" Foreground="#6a7282"></TextBlock>
+                               </Border>
+                           </Grid>
+                           <Grid>
+                               <Border Padding="16">
+                                      <TextBlock Text="Активні клієнти" FontSize="14" Foreground="#6a7282"></TextBlock>
+                                </Border>
+                           </Grid>
+                           <Grid> 
+                                <Border Padding="16">
+                                      <TextBlock Text="Сесії сьогодні" FontSize="14" Foreground="#6a7282"></TextBlock>
+                                </Border>
+                           </Grid>
+                           <Grid>
+                               <Border Padding="16">
+                                       <TextBlock Text="Дохід (сьогодні)" FontSize="14" Foreground="#6a7282"></TextBlock>
+                               </Border>
+                           </Grid>
+
+
+                       </UniformGrid>
+                   </Grid>
+              </StackPanel>
+           </Border>
+       </Grid>
+    </Grid>
 </Window>
