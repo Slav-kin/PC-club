@@ -36,28 +36,44 @@
               <StackPanel>
                  <StackPanel  Margin="0,0,0,24">
                       <TextBlock Text="Головна панель" FontSize="24" Margin="0,0,0,4" Foreground="White"></TextBlock>
-                      <TextBlock Text="Огляд стану ігрового клубу" FontSize="14" Foreground="#6a7282"></TextBlock>  
+                      <TextBlock Text="Огляд стану ігрового клубу" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>  
                   </StackPanel>
                    <Grid>
-                       <UniformGrid Columns="4">
+                       <UniformGrid Columns="4" >
 						   <Grid>
-                               <Border Padding="16">
-                                     <TextBlock Text="Зайнято місць" FontSize="14" Foreground="#6a7282"></TextBlock>
+                               <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">                       
+                                    <StackPanel>
+                                     <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" 
+          Data="M21,14H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10L8,21V22H16V21L14,18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z" />
+                                     <TextBlock Text="Зайнято місць" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
+                                    </StackPanel>
                                </Border>
                            </Grid>
                            <Grid>
-                               <Border Padding="16">
-                                      <TextBlock Text="Активні клієнти" FontSize="14" Foreground="#6a7282"></TextBlock>
+                               <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
+                                   <StackPanel>
+                                       <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left"
+                      Data="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                      <TextBlock Text="Активні клієнти" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
+                                    </StackPanel>
                                 </Border>
                            </Grid>
                            <Grid> 
-                                <Border Padding="16">
-                                      <TextBlock Text="Сесії сьогодні" FontSize="14" Foreground="#6a7282"></TextBlock>
+                                <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
+                                    <StackPanel>
+                                        <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left"
+                      Data="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.53 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
+                                      <TextBlock Text="Сесії сьогодні" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
+                                    </StackPanel>
                                 </Border>
                            </Grid>
                            <Grid>
-                               <Border Padding="16">
-                                       <TextBlock Text="Дохід (сьогодні)" FontSize="14" Foreground="#6a7282"></TextBlock>
+                               <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
+                                   <StackPanel>
+                                       <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left"
+                      Data="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.58L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z" />
+                                       <TextBlock Text="Дохід (сьогодні)" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
+                                   </StackPanel>
                                </Border>
                            </Grid>
 

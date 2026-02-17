@@ -21,6 +21,8 @@
         <SolidColorBrush x:Key="SecondTextHover">#ebe6e7</SolidColorBrush>
         <SolidColorBrush x:Key="PrimaryBackground">#121212</SolidColorBrush>
         <SolidColorBrush x:Key="SideMenuPrimaryBackground">#212121</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimarySecondText">#6a7282</SolidColorBrush>
+        <SolidColorBrush x:Key="SectionBackColor">#141414</SolidColorBrush>
     </Application.Resources>
 
 </Application>
