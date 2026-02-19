@@ -43,33 +43,44 @@ namespace PC_club.ViewModels
         }
 
         // 2. Метод для завантаження або оновлення списку місць з бази
+        private decimal _todayIncome;
+        public decimal TodayIncome
+        {
+            get => _todayIncome;
+            set
+            {
+                if (_todayIncome != value)
+                {
+                    _todayIncome = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public void RefreshHall()
         {
             using (var db = new PcClubContext())
             {
-                // Оновлюємо список місць для схеми залу
-                var data = db.Places.Include(p => p.Category).ToList();
+
+                // 1. Завантажуємо місця + категорії + сесії + клієнтів
+                var data = db.Places
+                    .Include(p => p.Category)
+                    .Include(p => p.Sessions)
+                        .ThenInclude(s => s.Client)
+                    .ToList();
+
                 PCPlaces.Clear();
                 foreach (var item in data) PCPlaces.Add(item);
 
-                // Рахуємо активних учасників (ті, хто мають статус active)
+                // 2. Оновлюємо лічильники
                 ActiveClientsCount = db.Clients.Count(c => c.Status == "active");
-
-                // Рахуємо зайняті місця (кількість активних ігрових сесій)
                 OccupiedPlacesCount = db.Sessions.Count(s => s.Status == "active");
-            }
-        }
-        private int _activeClientsCount;
-        public int ActiveClientsCount
-        {
-            get => _activeClientsCount;
-            set
-            {
-                if (_activeClientsCount != value)
-                {
-                    _activeClientsCount = value;
-                    OnPropertyChanged(); // Повідомляємо UI про зміни
-                }
+
+                // 3. Рахуємо дохід за сьогодні (захист від порожньої дати)
+                var today = System.DateTime.Today;
+                TodayIncome = db.Sessions
+                    .Where(s => s.StartSession.HasValue && s.StartSession.Value.Date == today)
+                    .Sum(s => s.TotalPrice) ?? 0;
             }
         }
 
@@ -86,6 +97,18 @@ namespace PC_club.ViewModels
                 }
             }
         }
-
+        private int _activeClientsCount;
+        public int ActiveClientsCount
+        {
+            get => _activeClientsCount;
+            set
+            {
+                if (_activeClientsCount != value)
+                {
+                    _activeClientsCount = value;
+                    OnPropertyChanged(); // Тепер Авалонія побачить зміни
+                }
+            }
+        }
     }
 }

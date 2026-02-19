@@ -32,6 +32,7 @@
         </Border>
 
        <Grid Grid.Column="1">
+         <ScrollViewer VerticalScrollBarVisibility="Auto">
            <Border Padding="24" Background="#0a0a0a">
               <StackPanel>
                  <StackPanel  Margin="0,0,0,24">
@@ -85,12 +86,55 @@
                             <TextBlock Text="Схема залу" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,4" />
                            
                             <TextBlock Text="Реальний стан місць" FontSize="14" Foreground="{DynamicResource PrimarySecondText}" Margin="0,0,0,20" />
-                            
+							<ItemsControl ItemsSource="{Binding PCPlaces}">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<UniformGrid Columns="5"/>
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:DataType="models:Place">
+										<Border BorderBrush="{Binding StatusColor}" BorderThickness="1.5" CornerRadius="12" Margin="8" Padding="16" Background="#111111">
+											<StackPanel Spacing="10">
+												<DockPanel>
+													<TextBlock Text="{Binding PlaceNumber, StringFormat='Місце #{0}'}"
+															   FontSize="12" Foreground="#99a1af" />
+													<Ellipse Width="8" Height="8"
+															 Fill="{Binding StatusColor}"
+															 HorizontalAlignment="Right"/>
+												</DockPanel>
+
+												<Border Background="#6c5ce7" CornerRadius="6" HorizontalAlignment="Left" Padding="8,4">
+													<TextBlock Text="{Binding Category.CategoryName}"
+															   FontSize="12" FontWeight="Bold" Foreground="White"/>
+												</Border>
+
+												<TextBlock Text="{Binding CurrentClientNickname}"
+														   FontSize="14"
+														   Foreground="White"
+														   Margin="0,5,0,0"/>
+											</StackPanel>
+										</Border>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
                        </StackPanel>
                     </Border>
                  </Grid>
+                  <StackPanel>
+                    <Grid>
+                        <Ellipse Width="12" Height="12" Fill="Green" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Вільно" Foreground="{DynamicResource PrimarySecondText}" Margin="17,0,0,0"></TextBlock>
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Left" Margin="75,0,0,0"/>
+                        <TextBlock Text="Зайнято" Foreground="{DynamicResource PrimarySecondText}" Margin="92,0,0,0"></TextBlock>
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Left" Margin="75,0,0,0"/>
+                    </Grid>
+
+                  </StackPanel>
               </StackPanel>
            </Border>
+         </ScrollViewer>
        </Grid>
     </Grid>
 </Window>
