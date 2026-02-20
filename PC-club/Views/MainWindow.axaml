@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="using:PC_club.Models"
-        mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="1000"
         x:Class="PC_club.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -46,6 +46,7 @@
                                     <StackPanel>
                                      <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" 
           Data="M21,14H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10L8,21V22H16V21L14,18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z" />
+                                        <TextBlock Text="" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
                                      <TextBlock Text="Зайнято місць" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
                                     </StackPanel>
                                </Border>
@@ -74,6 +75,7 @@
                                    <StackPanel>
                                        <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left"
                       Data="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.58L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z" />
+                                       <TextBlock Text="{Binding TodayIncome}" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
                                        <TextBlock Text="Дохід (сьогодні)" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
                                    </StackPanel>
                                </Border>
@@ -106,7 +108,7 @@
 												</DockPanel>
 
 												<Border Background="#6c5ce7" CornerRadius="6" HorizontalAlignment="Left" Padding="8,4">
-													<TextBlock Text="{Binding Category.CategoryName}"
+													<TextBlock Text="{Binding CurrentTariffName}"
 															   FontSize="12" FontWeight="Bold" Foreground="White"/>
 												</Border>
 
@@ -125,10 +127,10 @@
                   <StackPanel>
                     <Grid>
                         <Ellipse Width="12" Height="12" Fill="Green" HorizontalAlignment="Left"/>
-                        <TextBlock Text="Вільно" Foreground="{DynamicResource PrimarySecondText}" Margin="17,0,0,0"></TextBlock>
-                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Left" Margin="75,0,0,0"/>
-                        <TextBlock Text="Зайнято" Foreground="{DynamicResource PrimarySecondText}" Margin="92,0,0,0"></TextBlock>
-                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Left" Margin="75,0,0,0"/>
+                        <TextBlock Text="Вільно" Foreground="{DynamicResource PrimarySecondText}" Margin="17,5,0,0"></TextBlock>
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Left" Margin="75,5,0,0"/>
+                        <TextBlock Text="Зайнято" Foreground="{DynamicResource PrimarySecondText}" Margin="92,5,0,0"></TextBlock>
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Left" Margin="75,5,0,0"/>
                     </Grid>
 
                   </StackPanel>

@@ -12,6 +12,7 @@ namespace PC_club.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
 
         // Допоміжний метод для оновлення властивостей
+
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -57,6 +58,7 @@ namespace PC_club.ViewModels
             }
         }
 
+
         public void RefreshHall()
         {
             using (var db = new PcClubContext())
@@ -64,7 +66,6 @@ namespace PC_club.ViewModels
 
                 // 1. Завантажуємо місця + категорії + сесії + клієнтів
                 var data = db.Places
-                    .Include(p => p.Category)
                     .Include(p => p.Sessions)
                         .ThenInclude(s => s.Client)
                     .ToList();
@@ -81,6 +82,8 @@ namespace PC_club.ViewModels
                 TodayIncome = db.Sessions
                     .Where(s => s.StartSession.HasValue && s.StartSession.Value.Date == today)
                     .Sum(s => s.TotalPrice) ?? 0;
+
+                
             }
         }
 

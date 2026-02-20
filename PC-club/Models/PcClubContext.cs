@@ -18,8 +18,6 @@ public partial class PcClubContext : DbContext
 
     public virtual DbSet<Booking> Bookings { get; set; }
 
-    public virtual DbSet<Category> Categories { get; set; }
-
     public virtual DbSet<Client> Clients { get; set; }
 
     public virtual DbSet<Place> Places { get; set; }
@@ -54,31 +52,25 @@ public partial class PcClubContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("book_time");
             entity.Property(e => e.ClientId).HasColumnName("client_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
             entity.Property(e => e.PlaceId).HasColumnName("place_id");
             entity.Property(e => e.Status)
-                .HasMaxLength(30)
                 .HasDefaultValueSql("'active'")
+                .HasColumnType("enum('active','cancel','client_did_not_come')")
                 .HasColumnName("status");
 
             entity.HasOne(d => d.Client).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.ClientId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("bookings_ibfk_1");
 
             entity.HasOne(d => d.Place).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.PlaceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("bookings_ibfk_2");
-        });
-
-        modelBuilder.Entity<Category>(entity =>
-        {
-            entity.HasKey(e => e.CategoryId).HasName("PRIMARY");
-
-            entity.ToTable("categories");
-
-            entity.Property(e => e.CategoryId).HasColumnName("category_id");
-            entity.Property(e => e.CategoryName)
-                .HasMaxLength(50)
-                .HasColumnName("category_name");
         });
 
         modelBuilder.Entity<Client>(entity =>
@@ -86,6 +78,12 @@ public partial class PcClubContext : DbContext
             entity.HasKey(e => e.ClientId).HasName("PRIMARY");
 
             entity.ToTable("clients");
+
+            entity.HasIndex(e => e.Email, "email").IsUnique();
+
+            entity.HasIndex(e => e.Nickname, "nickname").IsUnique();
+
+            entity.HasIndex(e => e.Phone, "phone").IsUnique();
 
             entity.Property(e => e.ClientId).HasColumnName("client_id");
             entity.Property(e => e.Balance)
@@ -108,8 +106,8 @@ public partial class PcClubContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("phone");
             entity.Property(e => e.Status)
-                .HasMaxLength(20)
                 .HasDefaultValueSql("'active'")
+                .HasColumnType("enum('active','inactive')")
                 .HasColumnName("status");
         });
 
@@ -119,19 +117,14 @@ public partial class PcClubContext : DbContext
 
             entity.ToTable("places");
 
-            entity.HasIndex(e => e.CategoryId, "category_id");
+            entity.HasIndex(e => e.PlaceNumber, "place_number").IsUnique();
 
             entity.Property(e => e.PlaceId).HasColumnName("place_id");
-            entity.Property(e => e.CategoryId).HasColumnName("category_id");
             entity.Property(e => e.PlaceNumber).HasColumnName("place_number");
             entity.Property(e => e.Status)
-                .HasMaxLength(20)
                 .HasDefaultValueSql("'active'")
+                .HasColumnType("enum('active','inactive','booked')")
                 .HasColumnName("status");
-
-            entity.HasOne(d => d.Category).WithMany(p => p.Places)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("places_ibfk_1");
         });
 
         modelBuilder.Entity<Session>(entity =>
@@ -152,15 +145,17 @@ public partial class PcClubContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("end_session");
             entity.Property(e => e.GameAccount)
-                .HasMaxLength(10)
+                .HasDefaultValueSql("'club'")
+                .HasColumnType("enum('own','club')")
                 .HasColumnName("game_account");
             entity.Property(e => e.PlaceId).HasColumnName("place_id");
             entity.Property(e => e.StartSession)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")
                 .HasColumnName("start_session");
             entity.Property(e => e.Status)
-                .HasMaxLength(20)
                 .HasDefaultValueSql("'active'")
+                .HasColumnType("enum('active','inactive','completed')")
                 .HasColumnName("status");
             entity.Property(e => e.TariffId).HasColumnName("tariff_id");
             entity.Property(e => e.TotalPrice)
@@ -170,14 +165,17 @@ public partial class PcClubContext : DbContext
 
             entity.HasOne(d => d.Client).WithMany(p => p.Sessions)
                 .HasForeignKey(d => d.ClientId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sessions_ibfk_1");
 
             entity.HasOne(d => d.Place).WithMany(p => p.Sessions)
                 .HasForeignKey(d => d.PlaceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sessions_ibfk_2");
 
             entity.HasOne(d => d.Tariff).WithMany(p => p.Sessions)
                 .HasForeignKey(d => d.TariffId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sessions_ibfk_3");
         });
 
@@ -192,7 +190,7 @@ public partial class PcClubContext : DbContext
                 .HasColumnType("text")
                 .HasColumnName("tariff_configuration");
             entity.Property(e => e.TariffName)
-                .HasMaxLength(100)
+                .HasColumnType("enum('basic','consol','pro','vip')")
                 .HasColumnName("tariff_name");
             entity.Property(e => e.TariffPrice)
                 .HasPrecision(10, 2)

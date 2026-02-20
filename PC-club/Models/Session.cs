@@ -7,11 +7,11 @@ public partial class Session
 {
     public int SessionId { get; set; }
 
-    public int? ClientId { get; set; }
+    public int ClientId { get; set; }
 
-    public int? PlaceId { get; set; }
+    public int PlaceId { get; set; }
 
-    public int? TariffId { get; set; }
+    public int TariffId { get; set; }
 
     public DateTime? StartSession { get; set; }
 
@@ -23,9 +23,9 @@ public partial class Session
 
     public decimal? TotalPrice { get; set; }
 
-    public virtual Client? Client { get; set; }
+    public virtual Client Client { get; set; } = null!;
 
-    public virtual Place? Place { get; set; }
+    public virtual Place Place { get; set; } = null!;
 
-    public virtual Tariff? Tariff { get; set; }
+    public virtual Tariff Tariff { get; set; } = null!;
 }

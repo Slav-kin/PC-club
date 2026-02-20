@@ -7,9 +7,9 @@ public partial class Tariff
 {
     public int TariffId { get; set; }
 
-    public string? TariffName { get; set; }
+    public string TariffName { get; set; } = null!;
 
-    public decimal? TariffPrice { get; set; }
+    public decimal TariffPrice { get; set; }
 
     public string? TariffConfiguration { get; set; }
 
