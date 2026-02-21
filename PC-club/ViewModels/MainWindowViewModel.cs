@@ -57,7 +57,19 @@ namespace PC_club.ViewModels
                 }
             }
         }
-
+        private int _todaySessionsCount;
+        public int TodaySessionsCount
+        {
+            get => _todaySessionsCount;
+            set
+            {
+                if (_todaySessionsCount != value)
+                {
+                    _todaySessionsCount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public void RefreshHall()
         {
@@ -83,7 +95,24 @@ namespace PC_club.ViewModels
                     .Where(s => s.StartSession.HasValue && s.StartSession.Value.Date == today)
                     .Sum(s => s.TotalPrice) ?? 0;
 
-                
+                var Sesiontoday = System.DateTime.Today;
+
+                // 1. Активні клієнти (статус "active")
+                ActiveClientsCount = db.Clients.Count(c => c.Status == "active");
+
+                // 2. TodaySessionsCountЗайняті місця (активні сесії)
+                OccupiedPlacesCount = db.Sessions.Count(s => s.Status == "active");
+
+                // 3. Кількість усіх сесій за сьогодні
+                db.Sessions
+                    .Count(s => s.StartSession.HasValue && s.StartSession.Value.Date == today);
+
+                // 4. Дохід за сьогодні
+                TodayIncome = db.Sessions
+                    .Where(s => s.StartSession.HasValue && s.StartSession.Value.Date == today)
+                    .Sum(s => s.TotalPrice) ?? 0;
+
+
             }
         }
 

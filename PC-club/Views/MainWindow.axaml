@@ -46,7 +46,7 @@
                                     <StackPanel>
                                      <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" 
           Data="M21,14H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10L8,21V22H16V21L14,18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z" />
-                                        <TextBlock Text="" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
+                                        <TextBlock Text="{Binding OccupiedPlacesCount}" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
                                      <TextBlock Text="Зайнято місць" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
                                     </StackPanel>
                                </Border>
@@ -66,7 +66,8 @@
                                     <StackPanel>
                                         <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left"
                       Data="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.53 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
-                                      <TextBlock Text="Сесії сьогодні" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
+                                        <TextBlock Text="{Binding TodaySessionsCount}" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
+                                        <TextBlock Text="Сесії сьогодні" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"></TextBlock>
                                     </StackPanel>
                                 </Border>
                            </Grid>
@@ -126,11 +127,13 @@
                  </Grid>
                   <StackPanel>
                     <Grid>
-                        <Ellipse Width="12" Height="12" Fill="Green" HorizontalAlignment="Left"/>
+                        <Ellipse Width="12" Height="12" Fill="Green" HorizontalAlignment="Left" Margin="0,5,0,0"/>
                         <TextBlock Text="Вільно" Foreground="{DynamicResource PrimarySecondText}" Margin="17,5,0,0"></TextBlock>
                         <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Left" Margin="75,5,0,0"/>
                         <TextBlock Text="Зайнято" Foreground="{DynamicResource PrimarySecondText}" Margin="92,5,0,0"></TextBlock>
-                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Left" Margin="75,5,0,0"/>
+                        <TextBlock Text="Зайнято" Foreground="{DynamicResource PrimarySecondText}" Margin="92,5,0,0"></TextBlock>
+                        <Ellipse Width="12" Height="12" Fill="#f0b100" HorizontalAlignment="Left" Margin="160,5,0,0"/>
+                        <TextBlock Text="Заброньовано" Foreground="{DynamicResource PrimarySecondText}" Margin="175,5,0,0"></TextBlock>
                     </Grid>
 
                   </StackPanel>
