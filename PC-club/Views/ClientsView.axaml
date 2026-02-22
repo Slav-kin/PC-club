@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PC_club.ViewModels"
+             xmlns:models="using:PC_club.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PC_club.Views.ClientsView"
+             x:DataType="vm:ClientsViewModel">
+    
+    <Grid Background="#0a0a0a" RowDefinitions="Auto, *">
+        <StackPanel Grid.Row="0" Margin="24">
+            <TextBlock Text="Клієнти клубу" FontSize="24" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Text="Список зареєстрованих користувачів" FontSize="14" Foreground="#99a1af"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Margin="24,0,24,24" Background="#111111" CornerRadius="12" Padding="10">
+            <DataGrid ItemsSource="{Binding Clients}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="#222222"
+                      Background="Transparent"
+                      Foreground="White">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Нікнейм" Binding="{Binding Nickname}" Width="*" />
+                    <DataGridTextColumn Header="Ім'я" Binding="{Binding FirstName}" Width="*" />
+                    <DataGridTextColumn Header="Прізвище" Binding="{Binding LastName}" Width="*" />
+                    <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="*" />
+                    <DataGridTextColumn Header="Баланс" Binding="{Binding Balance, StringFormat={}{0} грн}" Width="100" />
+                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>
