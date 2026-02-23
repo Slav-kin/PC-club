@@ -41,16 +41,16 @@
                         </DataTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="КОНТАКТИ" Width="2*">
+                    <DataGridTemplateColumn Header="КОНТАКТИ" Width="2*" MinWidth="50">
                         <DataTemplate DataType="models:Client">
-						    <StackPanel>    
+						    <StackPanel VerticalAlignment="Center">    
                                 <TextBlock Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
-                                  <Path Height="14" Width="14" Data="M4,4 H20 A2,2 0 0 1 22,6 V18 A2,2 0 0 1 20,20 H4 A2,2 0 0 1 2,18 V6 A2,2 0 0 1 4,4 Z M22,6 L12,13 L2,6 " Fill="{DynamicResource WhiteText}"/>
+                                  <Path Height="14" Width="14" Data="M4,4 H20 A2,2 0 0 1 22,6 V18 A2,2 0 0 1 20,20 H4 A2,2 0 0 1 2,18 V6 A2,2 0 0 1 4,4 Z M22,6 L12,13 L2,6 " Fill="{DynamicResource WhiteText}" Stretch="Uniform"/>
                                   <Run Text=""/>
                                   <Run Text="{Binding Email}"></Run>
                                 </TextBlock>
                                 <TextBlock Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
-                                  <Path Height="12" Width="12" Data="M6.62,10.79 C8.06,13.62 10.38,15.94 13.21,17.38 L15.41,15.18 C15.69,14.9 16.08,14.82 16.43,14.93 C17.55,15.3 18.75,15.5 20,15.5 A1,1 0 0 1 21,16.5 V20 A1,1 0 0 1 20,21 A17,17 0 0 1 3,4 A1,1 0 0 1 4,3 H7.5 A1,1 0 0 1 8.5,4 C8.5,5.25 8.7,6.45 9.07,7.57 C9.18,7.92 9.1,8.31 8.82,8.59 Z" Fill="{DynamicResource WhiteText}"/>
+                                  <Path Height="14" Width="14" Data="M6.62,10.79 C8.06,13.62 10.38,15.94 13.21,17.38 L15.41,15.18 C15.69,14.9 16.08,14.82 16.43,14.93 C17.55,15.3 18.75,15.5 20,15.5 A1,1 0 0 1 21,16.5 V20 A1,1 0 0 1 20,21 A17,17 0 0 1 3,4 A1,1 0 0 1 4,3 H7.5 A1,1 0 0 1 8.5,4 C8.5,5.25 8.7,6.45 9.07,7.57 C9.18,7.92 9.1,8.31 8.82,8.59 Z" Fill="{DynamicResource WhiteText}" Stretch="Uniform"/>
                                   <Run Text=""/>
                                   <Run Text="{Binding Phone}"></Run>
                                 </TextBlock>
@@ -60,10 +60,32 @@
                     
                     <DataGridTemplateColumn Header="БАЛАНС" Width="*">
 						<DataTemplate DataType="models:Client">
-							<StackPanel>
-								<TextBlock Text="{Binding Balance}" Foreground="#05df72"></TextBlock>
+							<StackPanel VerticalAlignment="Center">
+								<TextBlock Text="{Binding Balance}" Foreground="#30fc03"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="СТАТУС" Width="*">
+                        <DataTemplate DataType="models:Client">
+							<StackPanel VerticalAlignment="Center" >
+                                <Border CornerRadius="10" Background="#12271b" HorizontalAlignment="Center" Padding="8,4">
+								    <TextBlock Text="{Binding Status}" Foreground="#05df59"></TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+
+                   <DataGridTemplateColumn Header="ДІЇ" Width="*">
+                       <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="models:Client">
+							  <StackPanel VerticalAlignment="Center" >
+                                 <Border CornerRadius="10" HorizontalAlignment="Center" Padding="8,4">
+								    <Button Content="Дії" Foreground="#a78bfa"></Button>
+                                 </Border>
+                              </StackPanel>
+                           </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
