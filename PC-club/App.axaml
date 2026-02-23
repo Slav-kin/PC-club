@@ -24,6 +24,8 @@
         <SolidColorBrush x:Key="SideMenuPrimaryBackground">#212121</SolidColorBrush>
         <SolidColorBrush x:Key="PrimarySecondText">#6a7282</SolidColorBrush>
         <SolidColorBrush x:Key="SectionBackColor">#141414</SolidColorBrush>
+        <SolidColorBrush x:Key="AddButton">#7c3aed</SolidColorBrush>
+        <SolidColorBrush x:Key="WhiteText">White</SolidColorBrush>
     </Application.Resources>
 
 </Application>
