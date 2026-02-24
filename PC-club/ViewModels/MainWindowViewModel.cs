@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using static PC_club.App;
 
 namespace PC_club.ViewModels
 {
@@ -28,7 +30,8 @@ namespace PC_club.ViewModels
         private void NavigateToClients()
         {
             // Коли натиснули "Клієнти", підставляємо ClientsViewModel
-            CurrentPage = new ClientsViewModel();
+            CurrentPage = App.Services.GetRequiredService<ClientsViewModel>();
         }
+
     }
 }

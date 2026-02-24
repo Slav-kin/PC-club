@@ -14,8 +14,12 @@
                <TextBlock Text="Клієнти клубу" FontSize="24" FontWeight="Bold" Foreground="White"/>
                <TextBlock Text="Список зареєстрованих користувачів" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"/>
           </StackPanel>
+
              <Button Grid.Column="1" Content="+ Додати клієнта" Command="{Binding openmodalcommand}" Padding="16,8" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"/>
      </Grid>
+        <Grid Grid.Column="1" Grid.Row="0">
+        <TextBox Text="{Binding searchtext}" Watermark="Пошук клієнта" Background="Red"></TextBox>
+        </Grid>
         <Border Grid.Row="1" Margin="24,0,24,24" Background="{DynamicResource PrimaryBackground}" CornerRadius="12" Padding="10">
             <DataGrid ItemsSource="{Binding Clients}"
                       AutoGenerateColumns="False"

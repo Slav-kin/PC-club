@@ -13,6 +13,20 @@ namespace PC_club.ViewModels
         // список доступних статусів для вибору
         public ObservableCollection<string> available_statuses { get; } = new() { "Активний", "Не активний" };
 
+        // список для збереження всіх клієнтів з бази для роботи пошуку
+        private System.Collections.Generic.List<Client> allclients = new();
+
+        private string _searchtext = "";
+        public string searchtext
+        {
+            get => _searchtext;
+            set
+            {
+                SetProperty(ref _searchtext, value);
+                updatelist();
+            }
+        }
+
         private bool _ismodalopen;
         public bool ismodalopen
         {
@@ -74,28 +88,50 @@ namespace PC_club.ViewModels
         public IRelayCommand closemodalcommand { get; }
         public IRelayCommand saveclientcommand { get; }
 
-        public ClientsViewModel()
+
+        private readonly PcClubContext _db;
+
+        public ClientsViewModel(PcClubContext db)
         {
+            _db = db;
+
             openmodalcommand = new RelayCommand(openmodal);
             closemodalcommand = new RelayCommand(closemodal);
             saveclientcommand = new RelayCommand(saveclient);
+
             loadclients();
         }
 
+
         private void loadclients()
         {
-            using (var db = new PcClubContext())
+            var clientsfromdb = _db.Clients.ToList();
+            allclients.Clear();
+            foreach (var client in clientsfromdb)
             {
-                var clientsfromdb = db.Clients.ToList();
+                allclients.Add(client);
+            }
+            updatelist();
+        }
+        private void updatelist()
+        {
+            var q = allclients.Where(c =>
+                string.IsNullOrWhiteSpace(searchtext) ||
+                (c.LastName != null && c.LastName.Contains(searchtext, System.StringComparison.OrdinalIgnoreCase)) ||
+                (c.FirstName != null && c.FirstName.Contains(searchtext, System.StringComparison.OrdinalIgnoreCase)) ||
+                (c.Phone != null && c.Phone.Contains(searchtext, System.StringComparison.OrdinalIgnoreCase)) ||
+                (c.Nickname != null && c.Nickname.Contains(searchtext, System.StringComparison.OrdinalIgnoreCase))
+            );
 
-                Clients.Clear();
-                foreach (var client in clientsfromdb)
-                {
-                    Clients.Add(client);
-                }
+            // сортуємо за прізвищем
+            q = q.OrderBy(c => c.LastName);
+
+            Clients.Clear();
+            foreach (var item in q)
+            {
+                Clients.Add(item);
             }
         }
-
         private void openmodal()
         {
             ismodalopen = true;
@@ -129,7 +165,6 @@ namespace PC_club.ViewModels
 
             try
             {
-                using (var db = new PcClubContext())
                 {
                     string dbstatus = newstatus == "Активний" ? "active" : "inactive";
 
@@ -144,22 +179,21 @@ namespace PC_club.ViewModels
                         Status = dbstatus // передаємо конвертований статус
                     };
 
-                    db.Clients.Add(newclient);
-                    db.SaveChanges();
+                    _db.Clients.Add(newclient);
+                    _db.SaveChanges();
 
-                    Clients.Add(newclient);
+                    allclients.Add(newclient);
+                    updatelist();
+
+
+
+                    closemodal();
                 }
-
-                closemodal();
-            }
+            }   
             catch (System.Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("помилка збереження: " + ex.Message);
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("деталі: " + ex.InnerException.Message);
-                }
-            }
+                System.Diagnostics.Debug.WriteLine("помилка: " + ex.Message);
+            }   
         }
     }
 }
