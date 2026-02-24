@@ -24,4 +24,5 @@ public partial class Client
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
     public virtual ICollection<Session> Sessions { get; set; } = new List<Session>();
+
 }

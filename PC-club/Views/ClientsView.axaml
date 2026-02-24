@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PC_club.ViewModels"
              xmlns:models="using:PC_club.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="1000"
              x:Class="PC_club.Views.ClientsView"
              x:DataType="vm:ClientsViewModel">
     
@@ -14,7 +14,7 @@
                <TextBlock Text="Клієнти клубу" FontSize="24" FontWeight="Bold" Foreground="White"/>
                <TextBlock Text="Список зареєстрованих користувачів" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"/>
           </StackPanel>
-             <Button Grid.Column="1" Content="+ Додати клієнта" Padding="16,8" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"/>
+             <Button Grid.Column="1" Content="+ Додати клієнта" Command="{Binding openmodalcommand}" Padding="16,8" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"/>
      </Grid>
         <Border Grid.Row="1" Margin="24,0,24,24" Background="{DynamicResource PrimaryBackground}" CornerRadius="12" Padding="10">
             <DataGrid ItemsSource="{Binding Clients}"
@@ -90,5 +90,38 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
+    <Grid Background="{DynamicResource PrimaryBackground}" IsVisible="{Binding ismodalopen}">
+        <Border Background="#1a1a1a" CornerRadius="12" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24">
+            <StackPanel Spacing="15">
+                <TextBlock Text="Додати клієнта" FontSize="20" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                
+                <TextBlock Text="Ім'я"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+                <TextBox Text="{Binding newfirstname}" Watermark="Ведіть Ім'я" Foreground="White"  CornerRadius="10"  Background="{DynamicResource AddButoonPlaceBackColor}"/>
+
+                <TextBlock Text="Прізвище"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
+                <TextBox Text="{Binding newlastname}" Watermark="Ведіть Прізвище" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+
+                <TextBlock Text="Нікнейм"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
+                <TextBox Text="{Binding newnickname}" Watermark="Ведіть Нікнейм" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+
+                <TextBlock Text="Телефон"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
+                <TextBox Text="{Binding newphone}" Watermark="+0956969679" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+
+                <TextBlock Text="Email"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
+                <TextBox Text="{Binding newemail}" Watermark="Email@example.com" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+                
+                <TextBlock Text="Початковий баланс"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
+                <TextBox Text="{Binding newbalance}" Watermark="0" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+
+                <TextBlock Text="Статус"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
+                <ComboBox ItemsSource="{Binding available_statuses}" SelectedItem="{Binding newstatus}" CornerRadius="10" Foreground="White" Background="{DynamicResource AddButoonPlaceBackColor}" HorizontalAlignment="Stretch"/>
+
+                <Grid ColumnDefinitions="*, *" Margin="0,15,0,0">
+                    <Button Grid.Column="0" Command="{Binding closemodalcommand}" Content="Скасувати" Background="#333333" Foreground="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,5,0"/>
+                    <Button Grid.Column="1" Command="{Binding saveclientcommand}" Content="Зберегти" Background="{DynamicResource AddButton}" Foreground="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,0,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+     </Grid>
     </Grid>
 </UserControl>
