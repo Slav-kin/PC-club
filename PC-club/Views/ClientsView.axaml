@@ -38,7 +38,7 @@
                       GridLinesVisibility="Horizontal"
                       HorizontalGridLinesBrush="#222222"
                       Background="Transparent"
-                      Foreground="White">
+                      Foreground="{DynamicResource WhiteText}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="КЛІЄНТ" Width="2*" >
                         <DataTemplate DataType="models:Client">
@@ -96,7 +96,8 @@
                         <DataTemplate DataType="models:Client">
 							  <StackPanel VerticalAlignment="Center" >
                                  <Border CornerRadius="10" HorizontalAlignment="Center" Padding="8,4">
-								    <Button Content="Дії" Foreground="#a78bfa"></Button>
+								    <Button Content="Дії" Foreground="#a78bfa"  Command="{Binding $parent[UserControl].((vm:ClientsViewModel)DataContext).OpenEditClientWindow}"
+                            CommandParameter="{Binding}"></Button>
                                  </Border>
                               </StackPanel>
                            </DataTemplate>
@@ -104,39 +105,51 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </Border>
+        </Border> 
     <Grid Background="{DynamicResource PrimaryBackground}" IsVisible="{Binding ismodalopen}">
-        <Border Background="#1a1a1a" CornerRadius="12" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24">
+        <Border Background="#1a1a1a" CornerRadius="12" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,50,0, 1000"> <!--вернути значення як були Margin="0,150,0, 1000"-->
             <StackPanel Spacing="15">
-                <TextBlock Text="Додати клієнта" FontSize="20" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                <TextBlock Text="Додати клієнта" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource WhiteText}" Margin="0,0,0,10"/>
                 
                 <TextBlock Text="Ім'я"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
-                <TextBox Text="{Binding newfirstname}" Watermark="Ведіть Ім'я" Foreground="White"  CornerRadius="10"  Background="{DynamicResource AddButoonPlaceBackColor}"/>
+                <TextBox Text="{Binding newfirstname}" Watermark="Ведіть Ім'я" Foreground="{DynamicResource WhiteText}"  CornerRadius="10"  Background="{DynamicResource AddButoonPlaceBackColor}"/>
 
                 <TextBlock Text="Прізвище"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
-                <TextBox Text="{Binding newlastname}" Watermark="Ведіть Прізвище" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+                <TextBox Text="{Binding newlastname}" Watermark="Ведіть Прізвище" Foreground="{DynamicResource WhiteText}" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
 
                 <TextBlock Text="Нікнейм"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
-                <TextBox Text="{Binding newnickname}" Watermark="Ведіть Нікнейм" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+                <TextBox Text="{Binding newnickname}" Watermark="Ведіть Нікнейм" Foreground="{DynamicResource WhiteText}" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
 
                 <TextBlock Text="Телефон"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
-                <TextBox Text="{Binding newphone}" Watermark="+0956969679" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+                <TextBox Text="{Binding newphone}" Watermark="+0956969679" Foreground="{DynamicResource WhiteText}" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
 
                 <TextBlock Text="Email"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
-                <TextBox Text="{Binding newemail}" Watermark="Email@example.com" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+                <TextBox Text="{Binding newemail}" Watermark="Email@example.com" Foreground="{DynamicResource WhiteText}" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
                 
                 <TextBlock Text="Початковий баланс"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
-                <TextBox Text="{Binding newbalance}" Watermark="0" Foreground="White" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+                <TextBox Text="{Binding newbalance}" Watermark="0" Foreground="{DynamicResource WhiteText}" CornerRadius="10" Background="{DynamicResource AddButoonPlaceBackColor}"/>
 
                 <TextBlock Text="Статус"  Foreground="White" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,-8,0,-10"/>
-                <ComboBox ItemsSource="{Binding available_statuses}" SelectedItem="{Binding newstatus}" CornerRadius="10" Foreground="White" Background="{DynamicResource AddButoonPlaceBackColor}" HorizontalAlignment="Stretch"/>
+                <ComboBox ItemsSource="{Binding AvailableStatuses}" SelectedItem="{Binding newstatus}" CornerRadius="10" Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}" HorizontalAlignment="Stretch"/>
 
                 <Grid ColumnDefinitions="*, *" Margin="0,15,0,0">
                     <Button Grid.Column="0" Command="{Binding closemodalcommand}" Content="Скасувати" Background="#333333" Foreground="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,5,0"/>
-                    <Button Grid.Column="1" Command="{Binding saveclientcommand}" Content="Зберегти" Background="{DynamicResource AddButton}" Foreground="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,0,0,0"/>
+                    <Button Grid.Column="1" Command="{Binding saveclientcommand}" Content="Зберегти" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,0,0,0"/>
                 </Grid>
             </StackPanel>
         </Border>
      </Grid>
+
+        <Grid  Background="{DynamicResource PrimaryBackground}" IsVisible="{Binding IsEditClientWindowOpen}">
+			<Border  Background="#1a1a1a" CornerRadius="12" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,150,0, 1000">
+				<StackPanel>
+                    <TextBlock Text="Редагувати клієнта" Foreground="{DynamicResource WhiteText}" FontWeight="Bold" FontSize="20"></TextBlock>
+                        
+
+                </StackPanel> 
+            </Border>
+        </Grid>
+
+
     </Grid>
 </UserControl>
