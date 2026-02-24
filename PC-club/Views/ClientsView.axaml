@@ -8,7 +8,7 @@
              x:Class="PC_club.Views.ClientsView"
              x:DataType="vm:ClientsViewModel">
     
-    <Grid Background="#0a0a0a" RowDefinitions="Auto, *">
+    <Grid Background="#0a0a0a" RowDefinitions="Auto,Auto, *">
        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="24">
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                <TextBlock Text="Клієнти клубу" FontSize="24" FontWeight="Bold" Foreground="White"/>
@@ -17,10 +17,21 @@
 
              <Button Grid.Column="1" Content="+ Додати клієнта" Command="{Binding openmodalcommand}" Padding="16,8" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"/>
      </Grid>
-        <Grid Grid.Column="1" Grid.Row="0">
-        <TextBox Text="{Binding searchtext}" Watermark="Пошук клієнта" Background="Red"></TextBox>
-        </Grid>
-        <Border Grid.Row="1" Margin="24,0,24,24" Background="{DynamicResource PrimaryBackground}" CornerRadius="12" Padding="10">
+        <Grid Grid.Row="1">
+            <TextBox Grid.Column="1" Text="{Binding searchtext}" Watermark="Пошук клієнта" Background="{DynamicResource PrimaryBackground}"
+             Margin="25,0,25,0" CornerRadius="10" Foreground="{DynamicResource SecondText}">
+                 <TextBox.InnerLeftContent>
+				    <Path
+                      Data="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                      Fill="LightGray"
+                      Width="16"
+                      Height="16"
+                      VerticalAlignment="Center"
+                      Margin="6,0,0,7"/>
+                 </TextBox.InnerLeftContent>
+            </TextBox>
+         </Grid>
+        <Border Grid.Row="2" Margin="24,0,24,24" Background="{DynamicResource PrimaryBackground}" CornerRadius="12" Padding="10">
             <DataGrid ItemsSource="{Binding Clients}"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
@@ -29,7 +40,7 @@
                       Background="Transparent"
                       Foreground="White">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="КЛІЄНТ" Width="2*">
+                    <DataGridTemplateColumn Header="КЛІЄНТ" Width="2*" >
                         <DataTemplate DataType="models:Client">
 						    <StackPanel>    
                                 <TextBlock Foreground="{DynamicResource WhiteText}">
