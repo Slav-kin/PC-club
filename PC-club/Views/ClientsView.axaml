@@ -96,7 +96,7 @@
                         <DataTemplate DataType="models:Client">
 							  <StackPanel VerticalAlignment="Center" >
                                  <Border CornerRadius="10" HorizontalAlignment="Center" Padding="8,4">
-								    <Button Content="Дії" Foreground="#a78bfa"  Command="{Binding $parent[UserControl].((vm:ClientsViewModel)DataContext).OpenEditClientWindow}"
+								    <Button Content="Редагувати" Foreground="#a78bfa"  Command="{Binding $parent[UserControl].((vm:ClientsViewModel)DataContext).OpenEditClientWindow}"
                             CommandParameter="{Binding}"></Button>
                                  </Border>
                               </StackPanel>
@@ -140,15 +140,43 @@
         </Border>
      </Grid>
 
-        <Grid  Background="{DynamicResource PrimaryBackground}" IsVisible="{Binding IsEditClientWindowOpen}">
-			<Border  Background="#1a1a1a" CornerRadius="12" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,150,0, 1000">
-				<StackPanel>
-                    <TextBlock Text="Редагувати клієнта" Foreground="{DynamicResource WhiteText}" FontWeight="Bold" FontSize="20"></TextBlock>
-                        
+<Grid Background="#B3000000" IsVisible="{Binding IsEditClientWindowOpen}">
+    <Border Background="#1a1a1a" CornerRadius="12" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,70,0,200">
+        <StackPanel Spacing="15">
+            <TextBlock Text="Редагувати клієнта" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource WhiteText}" Margin="0,0,0,10"/>
+            
+            <TextBlock Text="Ім'я"  Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+            <TextBox Text="{Binding NewFirstName}" Watermark="Ім'я" Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+          
+            <TextBlock Text="Прізвище"  Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+            <TextBox Text="{Binding NewLastName}" Watermark="Прізвище" Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+            
+            <TextBlock Text="Нікнейм"  Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+            <TextBox Text="{Binding NewNickname}" Watermark="Нікнейм" Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+            
+            <TextBlock Text="Телефон"  Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+            <TextBox Text="{Binding NewPhone}" Watermark="Телефон" Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+            
+            <TextBlock Text="Email"  Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+            <TextBox Text="{Binding NewEmail}" Watermark="Email" Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}"/>
+            
+            <TextBlock Text="Баланс"  Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+            <TextBox Text="{Binding NewBalance}" Watermark="Баланс" Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}"/>
 
-                </StackPanel> 
-            </Border>
-        </Grid>
+            <TextBlock Text="Статус"  Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+            <ComboBox ItemsSource="{Binding AvailableStatuses}" 
+                      SelectedItem="{Binding NewStatus}" 
+                      Foreground="{DynamicResource WhiteText}" 
+                      Background="{DynamicResource AddButoonPlaceBackColor}" 
+                      HorizontalAlignment="Stretch"/>
+
+            <Grid ColumnDefinitions="*, *" Margin="0,15,0,0">
+                <Button Grid.Column="0" Command="{Binding CloseEditClientWindow}" Content="Скасувати" Background="#333333" Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,5,0"/>
+                <Button Grid.Column="1" Command="{Binding SaveEditClientWindow}" Content="Зберегти" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,0,0,0"/>
+            </Grid>
+        </StackPanel>
+    </Border>
+</Grid>
 
 
     </Grid>

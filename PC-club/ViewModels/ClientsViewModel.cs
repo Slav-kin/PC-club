@@ -9,7 +9,12 @@ namespace PC_club.ViewModels
 {
     public partial class ClientsViewModel : ViewModelBase
     {
-        public ObservableCollection<Client> Clients { get; set; } = new();
+        private ObservableCollection<Client> _clients = new();
+        public ObservableCollection<Client> Clients
+        {
+            get => _clients;
+            set => SetProperty(ref _clients, value);
+        }
 
         // список доступних статусів для вибору
         public ObservableCollection<string> AvailableStatuses { get; } = new() { "Активний", "Не активний" };
@@ -164,14 +169,15 @@ namespace PC_club.ViewModels
         }
         private void updatelist()
         {
-            var q = allclients.Where(c =>
-                string.IsNullOrWhiteSpace(searchtext) ||
-                (c.LastName != null && c.LastName.Contains(searchtext, System.StringComparison.OrdinalIgnoreCase)) ||
-                (c.FirstName != null && c.FirstName.Contains(searchtext, System.StringComparison.OrdinalIgnoreCase)) ||
-                (c.Phone != null && c.Phone.Contains(searchtext, System.StringComparison.OrdinalIgnoreCase)) ||
-                (c.Nickname != null && c.Nickname.Contains(searchtext, System.StringComparison.OrdinalIgnoreCase))
-            );
+            var q = allclients.Where(c =>    
+        string.IsNullOrWhiteSpace(searchtext) ||
+        (c.LastName != null && c.LastName.Contains(searchtext, StringComparison.OrdinalIgnoreCase)) ||
+        (c.FirstName != null && c.FirstName.Contains(searchtext, StringComparison.OrdinalIgnoreCase)) ||
+        (c.Phone != null && c.Phone.Contains(searchtext, StringComparison.OrdinalIgnoreCase)) ||
+        (c.Nickname != null && c.Nickname.Contains(searchtext, StringComparison.OrdinalIgnoreCase))
+         ).OrderBy(c => c.LastName);
 
+            Clients = new ObservableCollection<Client>(q);
             // сортуємо за прізвищем
             q = q.OrderBy(c => c.LastName);
 
