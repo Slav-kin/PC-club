@@ -11,12 +11,12 @@
     <Grid Background="#0a0a0a" RowDefinitions="Auto,Auto, *">
        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="24">
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
-               <TextBlock Text="Клієнти клубу" FontSize="24" FontWeight="Bold" Foreground="White"/>
+               <TextBlock Text="Клієнти клубу" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource WhiteText}"/>
                <TextBlock Text="Список зареєстрованих користувачів" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"/>
           </StackPanel>
 
              <Button Grid.Column="1" Content="+ Додати клієнта" Command="{Binding openmodalcommand}" Padding="16,8" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"/>
-     </Grid>
+       </Grid>
         <Grid Grid.Row="1">
             <TextBox Grid.Column="1" Text="{Binding searchtext}" Watermark="Пошук клієнта" Background="{DynamicResource PrimaryBackground}"
              Margin="25,0,25,0" CornerRadius="10" Foreground="{DynamicResource SecondText}">

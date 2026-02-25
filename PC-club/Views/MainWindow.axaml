@@ -16,7 +16,7 @@
                 <TextBlock Text="Game Zone" FontSize="20" FontWeight="Bold" Margin="0,0,0,20" Foreground="White" />
                 <Button Content="Головна" Command="{Binding NavigateToHomeCommand}" HorizontalAlignment="Stretch"/>
                 <Button Content="Клієнти" Command="{Binding NavigateToClientsCommand}" HorizontalAlignment="Stretch"/>
-                <Button Content="Місця" HorizontalAlignment="Stretch"/>
+                <!--<Button Content="Місця" HorizontalAlignment="Stretch"/>-->
                 <Button Content="Графік" HorizontalAlignment="Stretch"/>
                 <Button Content="Сесії" HorizontalAlignment="Stretch"/>
                 <Button Content="Бронювання" HorizontalAlignment="Stretch"/>
