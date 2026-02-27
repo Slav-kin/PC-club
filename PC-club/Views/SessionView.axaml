@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PC_club.ViewModels"
              xmlns:models="using:PC_club.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1000"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
              x:Class="PC_club.Views.SessionView"
              x:DataType="vm:SessionViewModel">
 
@@ -14,7 +14,7 @@
 				   <TextBlock Text="Сесії" Foreground="{DynamicResource WhiteText}" FontSize="24"></TextBlock>
                    <TextBlock Text="Aктивні сесії клієнтів" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"/>
                </StackPanel>
-               <Button Grid.Column="1" Content="+ Нова сесія" Padding="16,8" Background="{DynamicResource AddButton}"
+               <Button Grid.Column="1" Content="+ Нова сесія" Command="{Binding OpenAddSessionWindowCommand}" Padding="16,8" Background="{DynamicResource AddButton}"
                Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"></Button>
            </Grid>	
             <UniformGrid Columns="3" Grid.Row="1">
@@ -126,12 +126,41 @@
                          <DataGridTemplateColumn Header="Дії" Width="*">
 							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <Button Content="Завершити"  Foreground="#a78bfa"></Button>
+									 <Button Content="Завершити" Command="{Binding $parent[UserControl].((vm:SessionViewModel)DataContext).EndActiveSessionCommand}" CommandParameter="{Binding}" Foreground="#a78bfa"></Button>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
                      </DataGrid.Columns>
                 </DataGrid>
             </Border>
+              <Grid IsVisible="{Binding IsAddSessionWindowOpen}" Grid.RowSpan="3">
+		<Border Background="#1a1a1a" CornerRadius="12" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,0,0,0">
+			<StackPanel Spacing="15">
+				 <TextBlock Text="Нова сесія" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource WhiteText}"/>
+
+                 <TextBlock Text="Клієнт"  Foreground="{DynamicResource SecondText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+                <ComboBox ItemsSource="{Binding AvailableClients}" SelectedItem="{Binding SelectedClient}" DisplayMemberBinding="{Binding FullName}"
+                          Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}" HorizontalAlignment="Stretch"> 
+                </ComboBox>
+
+                <TextBlock Text="Місце"  Foreground="{DynamicResource SecondText}" FontWeight="Medium"/>
+                <ComboBox ItemsSource="{Binding AvailablePlace}" SelectedItem="{Binding SelectedPlace}" DisplayMemberBinding="{Binding PlaceNumber, StringFormat='#{0}'}"
+                          Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}" HorizontalAlignment="Stretch"></ComboBox>
+
+                <TextBlock Text="Тип акаунту" Foreground="{DynamicResource SecondText}" FontWeight="Medium"></TextBlock>
+                <ComboBox ItemsSource="{Binding AvailableAcaunt}" SelectedItem="{Binding SelectedGameAcaunt}"
+                          Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}" HorizontalAlignment="Stretch"></ComboBox>
+                <Border CornerRadius="10" Background="{DynamicResource PrimaryBackground}" Padding="10">
+                 <TextBlock Text="Сесія почнеться зараз і буде активною до завершення" Foreground="{DynamicResource SecondText}" Background="{DynamicResource PrimaryBackground}" FontWeight="Medium" HorizontalAlignment="Center"></TextBlock> 
+               </Border>
+
+                <Grid ColumnDefinitions="*,*">
+                     <Button Grid.Column="0" Content="Скасувати" Command="{Binding CloseAddSessionWindowCommand}" Background="{DynamicResource SideMenuPrimaryBackground}" Foreground="{DynamicResource WhiteText}" CornerRadius="10" HorizontalAlignment="Center" Padding="48,12" FontSize="16"></Button>
+                     <Button Grid.Column="1" Content="Почати сесію" Command="{Binding SaveNewSessionCommand}" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" CornerRadius="10" HorizontalAlignment="Center" Padding="48,12" FontSize="16"></Button>
+                </Grid>
+                 
+            </StackPanel>
+        </Border>
+    </Grid>
         </Grid>
 </UserControl>
