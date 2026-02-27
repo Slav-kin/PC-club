@@ -21,7 +21,7 @@
                 <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
                             <StackPanel>
                                 <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
-                                <TextBlock Text="{Binding }" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                                <TextBlock Text="{Binding CountActiveSessions}" FontSize="14" Foreground="{DynamicResource WhiteText}" />
                                 <TextBlock Text="Активні зараз" FontSize="12" Foreground="#99a1af" />
                             </StackPanel>
                 </Border>
@@ -29,7 +29,7 @@
                 <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
                             <StackPanel>
                                 <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
-                                <TextBlock Text="{Binding }" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                                <TextBlock Text="{Binding CountTotalEarnToday }" FontSize="14" Foreground="{DynamicResource WhiteText}" />
                                 <TextBlock Text="Сьогодні зароблено" FontSize="12" Foreground="#99a1af" />
                             </StackPanel>
                 </Border>
@@ -37,7 +37,7 @@
                 <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
                     <StackPanel>
                        <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
-                       <TextBlock Text="{Binding }" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                       <TextBlock Text="{Binding CountTodayTotalSessions }" FontSize="14" Foreground="{DynamicResource WhiteText}" />
                        <TextBlock Text="Всього сьогодні" FontSize="12" Foreground="#99a1af" />
                     </StackPanel>
                 </Border>
@@ -45,88 +45,88 @@
              <Border Grid.Row="2" Margin="24,0,24,24" Background="{DynamicResource PrimaryBackground}" CornerRadius="12" Padding="10">
                  <DataGrid AutoGenerateColumns="False"
                            IsReadOnly="True"
+                           ItemsSource= "{Binding Sessions}"
                            GridLinesVisibility="Horizontal"
                            HorizontalGridLinesBrush="#222222"
                            Background="Transparent"
-                           Foreground="{DynamicResource WhiteText}"> <!--додати ItemsSource=Sessions"-->
+                           Foreground="{DynamicResource WhiteText}"> 
                      <DataGrid.Columns>
 						 <DataGridTemplateColumn Header="ID" Width="*">
-							 <DataTemplate> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <TextBlock Text="{Binding }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
+									 <TextBlock Text="{Binding SessionId }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                      </TextBlock>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
                          <DataGridTemplateColumn Header="Клієнт" Width="*">
-							 <DataTemplate> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <TextBlock Text="{Binding }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
+									 <TextBlock Text="{Binding Client.FullName}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                      </TextBlock>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
                          <DataGridTemplateColumn Header="Місце" Width="*">
-							 <DataTemplate> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session">
 								 <StackPanel>
-									 <TextBlock Text="{Binding }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
+									 <TextBlock Text="{Binding Place.PlaceNumber}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                      </TextBlock>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
                         <DataGridTemplateColumn Header="Час початку" Width="*">
-							 <DataTemplate DataType="models:Session"> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <TextBlock Text="{Binding StartSession }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
+									 <TextBlock Text="{Binding StartSession, StringFormat='{}{0:HH:mm}'}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                      </TextBlock>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
                          <DataGridTemplateColumn Header="Тривалість" Width="*">
-							 <DataTemplate> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <TextBlock Text="{Binding }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
+									 <TextBlock Text="{Binding SessionLength}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"> 
                                      </TextBlock>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
                          <DataGridTemplateColumn Header="Аккаунт" Width="*">
-							 <DataTemplate> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session">
 								 <StackPanel>
-									 <TextBlock Text="{Binding }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
+									 <TextBlock Text="{Binding GameAccount}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                      </TextBlock>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
                         <DataGridTemplateColumn Header="Ціна" Width="*">
-							 <DataTemplate> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <TextBlock Text="{Binding }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
+									 <TextBlock Text="{Binding TotalPrice}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                      </TextBlock>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
                          <DataGridTemplateColumn Header="Статус" Width="*">
-							 <DataTemplate> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <TextBlock Text="{Binding }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
+									 <TextBlock Text="{Binding Status }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                      </TextBlock>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
                          <DataGridTemplateColumn Header="Дії" Width="*">
-							 <DataTemplate> <!--DataType="models:Sessions"-->
+							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <TextBlock Text="{Binding }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center">
-                                     </TextBlock>
+									 <Button Content="Завершити"  Foreground="#a78bfa"></Button>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>

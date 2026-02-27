@@ -57,7 +57,6 @@ namespace PC_club.ViewModels
         }
 
 
-
         private string _newfirstname = "";
         public string newfirstname
         {

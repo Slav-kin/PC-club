@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static System.Collections.Specialized.BitVector32;
 
 namespace PC_club.Models;
 
@@ -28,4 +29,7 @@ public partial class Session
     public virtual Place Place { get; set; } = null!;
 
     public virtual Tariff Tariff { get; set; } = null!;
+
+    public TimeSpan SessionLength => (EndSession - StartSession) ?? TimeSpan.Zero;
 }
+

@@ -3,6 +3,7 @@
         xmlns:vm="using:PC_club.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:PC_club.Views"
         xmlns:models="using:PC_club.Models"
         mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="1000"
         x:Class="PC_club.Views.MainWindow"
@@ -18,20 +19,28 @@
                 <Button Content="Клієнти" Command="{Binding NavigateToClientsCommand}" HorizontalAlignment="Stretch"/>
                 <!--<Button Content="Місця" HorizontalAlignment="Stretch"/>-->
                 <Button Content="Графік" HorizontalAlignment="Stretch"/>
-                <Button Content="Сесії" HorizontalAlignment="Stretch"/>
+                <Button Content="Сесії" Command="{Binding NavigateToSessionsCommand}" HorizontalAlignment="Stretch"/>
                 <Button Content="Бронювання" HorizontalAlignment="Stretch"/>
                 <Button Content="Тарифи" HorizontalAlignment="Stretch"/>
             </StackPanel>
         </Border>
 
-        <Grid Grid.Column="1">
-            <ContentControl Content="{Binding CurrentPage}">
-                <ContentControl.DataTemplates>
-                    <DataTemplate DataType="{x:Type vm:MainWindowViewModel}">
-                        
-                    </DataTemplate>
-                </ContentControl.DataTemplates>
-            </ContentControl>
+<Grid Grid.Column="1">
+    <ContentControl Content="{Binding CurrentPage}">
+        <ContentControl.DataTemplates>
+            <DataTemplate DataType="{x:Type vm:ClientsViewModel}">
+                <views:ClientsView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:SessionViewModel}">
+                <views:SessionView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+                <views:HomeView />
+            </DataTemplate>
+        </ContentControl.DataTemplates>
+     </ContentControl>
         </Grid>
     </Grid>
 </Window>

@@ -29,7 +29,9 @@ namespace PC_club
             servicecollection.AddTransient<PcClubContext>();
 
             // реєструємо твої viewmodel
+            servicecollection.AddTransient<HomeViewModel>();
             servicecollection.AddTransient<ClientsViewModel>();
+            servicecollection.AddTransient<SessionViewModel>();
 
             // збираємо сервіси
             Services = servicecollection.BuildServiceProvider();

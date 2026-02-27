@@ -25,4 +25,6 @@ public partial class Client
 
     public virtual ICollection<Session> Sessions { get; set; } = new List<Session>();
 
+    public string FullName => $"{FirstName} {LastName}";
+
 }

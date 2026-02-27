@@ -23,15 +23,20 @@ namespace PC_club.ViewModels
         private void NavigateToHome()
         {
             // Коли натиснули "Головна", підставляємо HomeViewModel
-            CurrentPage = new HomeViewModel();
+            CurrentPage = App.Services.GetRequiredService<HomeViewModel>();
         }
 
-        [RelayCommand]
+        [RelayCommand]  
         private void NavigateToClients()
         {
             // Коли натиснули "Клієнти", підставляємо ClientsViewModel
             CurrentPage = App.Services.GetRequiredService<ClientsViewModel>();
         }
 
+        [RelayCommand]
+        private void NavigateToSessions()
+        {
+            CurrentPage = App.Services.GetRequiredService<SessionViewModel>();
+        }
     }
 }
