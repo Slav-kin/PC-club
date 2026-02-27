@@ -126,7 +126,7 @@ namespace PC_club.ViewModels
             {
                 "Власний" => "own",
                 "Клубний" => "club",
-                _ => "own" // значення за замовчуванням
+                _ => "own" 
             };
 
             var newSession = new Session()

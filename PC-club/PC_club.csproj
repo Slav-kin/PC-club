@@ -10,8 +10,11 @@
   <ItemGroup>
     <Folder Include="Assets\images\" />
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaXaml Remove="Views\NewFolder\**" />
+    <Compile Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
+    <None Remove="Views\NewFolder\**" />
     <Folder Include="Models\" />
-    <Folder Include="Views\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

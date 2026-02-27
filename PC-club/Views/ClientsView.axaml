@@ -106,7 +106,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Border> 
-    <Grid Background="{DynamicResource PrimaryBackground}" IsVisible="{Binding ismodalopen}">
+    <Grid Background="{DynamicResource PrimaryBackground}" IsVisible="{Binding ismodalopen}" Grid.RowSpan="2">
         <Border Background="#1a1a1a" CornerRadius="12" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,50,0, 1000"> <!--вернути значення як були Margin="0,150,0, 1000"-->
             <StackPanel Spacing="15">
                 <TextBlock Text="Додати клієнта" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource WhiteText}" Margin="0,0,0,10"/>
@@ -140,7 +140,7 @@
         </Border>
      </Grid>
 
-<Grid Background="#B3000000" IsVisible="{Binding IsEditClientWindowOpen}">
+<Grid Background="#B3000000" IsVisible="{Binding IsEditClientWindowOpen}"  Grid.RowSpan="3">
     <Border Background="#1a1a1a" CornerRadius="12" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,70,0,200">
         <StackPanel Spacing="15">
             <TextBlock Text="Редагувати клієнта" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource WhiteText}" Margin="0,0,0,10"/>

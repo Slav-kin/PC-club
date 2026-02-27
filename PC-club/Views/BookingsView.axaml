@@ -1,0 +1,126 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PC_club.ViewModels"
+             xmlns:models="using:PC_club.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PC_club.Views.BookingsView"
+             x:DataType="vm:BookingsViewModel">
+
+            <Grid Background="{DynamicResource PrimaryBackground}" RowDefinitions="Auto,Auto,*">
+                 <Grid Grid.Row="0" VerticalAlignment="Center" ColumnDefinitions="*, Auto" Margin="15">
+                     <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                         <TextBlock Text="Бронювання" Foreground="{DynamicResource WhiteText}" FontSize="24"></TextBlock>
+                         <TextBlock Text="Управління бронюваннями місць" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"/>
+                     </StackPanel>
+                     <Button Grid.Column="1" Content="+ Нова сесія" Padding="16,8" Background="{DynamicResource AddButton}"
+                      Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"></Button>
+                 </Grid>
+                 <UniformGrid Columns="3" Grid.Row="1">
+					  <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
+                            <StackPanel>
+                                <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
+                                <TextBlock Text="-" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                                <TextBlock Text="Активні бронювання" FontSize="12" Foreground="#99a1af" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
+                            <StackPanel>
+                                <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
+                                <TextBlock Text="-" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                                <TextBlock Text="Очікують підтвердження" FontSize="12" Foreground="#99a1af" />
+                            </StackPanel>
+                        </Border>
+
+                          <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
+                             <StackPanel>
+                                <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
+                                   <TextBlock Text="-" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                                   <TextBlock Text="Всього" FontSize="12" Foreground="#99a1af" />
+                             </StackPanel>
+                          </Border>
+                 </UniformGrid>
+
+                <Border Grid.Row="3" Margin="24,0,24,24" Background="{DynamicResource PrimaryBackground}" CornerRadius="12" Padding="10">
+					<DataGrid AutoGenerateColumns="False"
+                           IsReadOnly="True"
+                           GridLinesVisibility="Horizontal"
+                           HorizontalGridLinesBrush="#222222"
+                           Background="Transparent"
+                           Foreground="{DynamicResource WhiteText}"> <!-- ItemsSource= "{Binding Sessions}"-->
+
+                         <DataGrid.Columns>
+                           <DataGridTemplateColumn Header="ID" Width="*">
+					     		 <DataTemplate> 
+							     	 <StackPanel>
+								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                     </StackPanel>
+                                 </DataTemplate>
+                            </DataGridTemplateColumn>
+
+                           <DataGridTemplateColumn Header="Клієнт" Width="*">
+					     		 <DataTemplate> 
+							     	 <StackPanel>
+								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                     </StackPanel>
+                                 </DataTemplate>
+                            </DataGridTemplateColumn>
+
+                           <DataGridTemplateColumn Header="Місце" Width="*">
+					     		 <DataTemplate> 
+							     	 <StackPanel>
+								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                     </StackPanel>
+                                 </DataTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Дата" Width="*">
+					     		 <DataTemplate> 
+							     	 <StackPanel>
+								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                     </StackPanel>
+                                 </DataTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Час початку" Width="*">
+					     		 <DataTemplate> 
+							     	 <StackPanel>
+								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                     </StackPanel>
+                                 </DataTemplate>
+                            </DataGridTemplateColumn>
+
+                           <DataGridTemplateColumn Header="Тривалість" Width="*">
+					     		 <DataTemplate> 
+							     	 <StackPanel>
+								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                     </StackPanel>
+                                 </DataTemplate>
+                            </DataGridTemplateColumn>
+
+                           <DataGridTemplateColumn Header="Статус" Width="*">
+					     		 <DataTemplate> 
+							     	 <StackPanel>
+								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                     </StackPanel>
+                                 </DataTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Дії" Width="2*">
+					     		 <DataTemplate> 
+							     	 <StackPanel>
+								     	 <Button></Button>
+                                         <Button></Button>
+                                     </StackPanel>
+                                 </DataTemplate>
+                            </DataGridTemplateColumn>
+                         
+                         
+                         
+                         </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Grid>
+</UserControl>

@@ -11,10 +11,16 @@ namespace PC_club.ViewModels
         [ObservableProperty]
         private ViewModelBase _currentPage;
 
+        [ObservableProperty] private bool _isHomeSelected;
+        [ObservableProperty] private bool _isClientsSelected;
+        [ObservableProperty] private bool _isSessionsSelected;
+
         public MainWindowViewModel()
         {
             // При старті програми автоматично відкриваємо Головну сторінку
             CurrentPage = new HomeViewModel();
+            ResetSelection();
+            IsHomeSelected = true;
         }
 
         // --- Команди для кнопок бокового меню ---
@@ -24,19 +30,32 @@ namespace PC_club.ViewModels
         {
             // Коли натиснули "Головна", підставляємо HomeViewModel
             CurrentPage = App.Services.GetRequiredService<HomeViewModel>();
+            ResetSelection();
+            IsHomeSelected = true;
         }
 
-        [RelayCommand]  
+        [RelayCommand]
         private void NavigateToClients()
         {
             // Коли натиснули "Клієнти", підставляємо ClientsViewModel
             CurrentPage = App.Services.GetRequiredService<ClientsViewModel>();
+            ResetSelection();
+            IsClientsSelected = true;
         }
 
         [RelayCommand]
         private void NavigateToSessions()
         {
             CurrentPage = App.Services.GetRequiredService<SessionViewModel>();
+            ResetSelection();
+            IsSessionsSelected = true;
+        }
+
+        private void ResetSelection()
+        {
+            IsHomeSelected = false;
+            IsClientsSelected = false;
+            IsSessionsSelected = false;
         }
     }
 }
