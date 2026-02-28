@@ -17,11 +17,11 @@
                      <Button Grid.Column="1" Content="+ Нова сесія" Padding="16,8" Background="{DynamicResource AddButton}"
                       Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"></Button>
                  </Grid>
-                 <UniformGrid Columns="3" Grid.Row="1">
+                 <UniformGrid Columns="3" Grid.Row="1" >
 					  <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
                             <StackPanel>
                                 <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
-                                <TextBlock Text="-" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                                <TextBlock Text="{Binding CountActiveBookings}" FontSize="14" Foreground="{DynamicResource WhiteText}" />
                                 <TextBlock Text="Активні бронювання" FontSize="12" Foreground="#99a1af" />
                             </StackPanel>
                         </Border>
@@ -29,90 +29,90 @@
                         <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
                             <StackPanel>
                                 <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
-                                <TextBlock Text="-" FontSize="14" Foreground="{DynamicResource WhiteText}" />
-                                <TextBlock Text="Очікують підтвердження" FontSize="12" Foreground="#99a1af" />
+                                <TextBlock Text="{Binding CountExpectedSoonBooking}" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                                <TextBlock Text="Скоро розпочнуться" FontSize="12" Foreground="#99a1af" />
                             </StackPanel>
                         </Border>
 
                           <Border Padding="16" Background="{DynamicResource SectionBackColor}" CornerRadius="10" Margin="8">
                              <StackPanel>
                                 <PathIcon Width="20" Height="20" Foreground="#99a1af" HorizontalAlignment="Left" />
-                                   <TextBlock Text="-" FontSize="14" Foreground="{DynamicResource WhiteText}" />
+                                   <TextBlock Text="{Binding CountTotalBooking}" FontSize="14" Foreground="{DynamicResource WhiteText}" />
                                    <TextBlock Text="Всього" FontSize="12" Foreground="#99a1af" />
                              </StackPanel>
                           </Border>
                  </UniformGrid>
 
-                <Border Grid.Row="3" Margin="24,0,24,24" Background="{DynamicResource PrimaryBackground}" CornerRadius="12" Padding="10">
+                <Border Grid.Row="3" Margin="24,0,24,24" Background="{DynamicResource PrimaryBackground}" CornerRadius="12" Padding="10" >
 					<DataGrid AutoGenerateColumns="False"
                            IsReadOnly="True"
+                           ItemsSource ="{Binding Bookings}"
                            GridLinesVisibility="Horizontal"
                            HorizontalGridLinesBrush="#222222"
                            Background="Transparent"
-                           Foreground="{DynamicResource WhiteText}"> <!-- ItemsSource= "{Binding Sessions}"-->
+                           Foreground="{DynamicResource WhiteText}"> 
 
                          <DataGrid.Columns>
-                           <DataGridTemplateColumn Header="ID" Width="*">
-					     		 <DataTemplate> 
-							     	 <StackPanel>
-								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                           <DataGridTemplateColumn Header="ID" Width="Auto">
+					     		 <DataTemplate DataType="models:Booking"> 
+							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+								     	 <TextBlock Text="{Binding BookId}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
 
                            <DataGridTemplateColumn Header="Клієнт" Width="*">
-					     		 <DataTemplate> 
-							     	 <StackPanel>
-								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+					     		 <DataTemplate DataType="models:Booking"> 
+							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+								     	 <TextBlock Text="{Binding Client.FullName}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
 
                            <DataGridTemplateColumn Header="Місце" Width="*">
-					     		 <DataTemplate> 
-							     	 <StackPanel>
-								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+					     		 <DataTemplate DataType="models:Booking"> 
+							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+								     	 <TextBlock Text="{Binding Place.PlaceNumber}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
 
                             <DataGridTemplateColumn Header="Дата" Width="*">
-					     		 <DataTemplate> 
-							     	 <StackPanel>
-								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+					     		 <DataTemplate DataType="models:Booking"> 
+							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+								     	 <TextBlock Text="{Binding DisplayDate}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
 
                             <DataGridTemplateColumn Header="Час початку" Width="*">
-					     		 <DataTemplate> 
-							     	 <StackPanel>
-								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+					     		 <DataTemplate DataType="models:Booking"> 
+							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+								     	 <TextBlock Text="{Binding BookTime, StringFormat='{}{0:HH:mm}'}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
 
                            <DataGridTemplateColumn Header="Тривалість" Width="*">
-					     		 <DataTemplate> 
-							     	 <StackPanel>
-								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+					     		 <DataTemplate DataType="models:Booking"> 
+							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+								     	 <TextBlock Text="{Binding BookLengthMinutes}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
 
                            <DataGridTemplateColumn Header="Статус" Width="*">
-					     		 <DataTemplate> 
-							     	 <StackPanel>
-								     	 <TextBlock Text="" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+					     		 <DataTemplate DataType="models:Booking"> 
+							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+								     	 <TextBlock Text="{Binding Status}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
 
-                            <DataGridTemplateColumn Header="Дії" Width="2*">
+                            <DataGridTemplateColumn Header="Дії" Width="*">
 					     		 <DataTemplate> 
-							     	 <StackPanel>
+							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 								     	 <Button></Button>
-                                         <Button></Button>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>

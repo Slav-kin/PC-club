@@ -51,7 +51,7 @@
                            Background="Transparent"
                            Foreground="{DynamicResource WhiteText}"> 
                      <DataGrid.Columns>
-						 <DataGridTemplateColumn Header="ID" Width="*">
+						 <DataGridTemplateColumn Header="ID" Width="Auto">
 							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
 									 <TextBlock Text="{Binding SessionId }" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -60,7 +60,7 @@
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
-                         <DataGridTemplateColumn Header="Клієнт" Width="*">
+                         <DataGridTemplateColumn Header="Клієнт" Width="Auto">
 							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
 									 <TextBlock Text="{Binding Client.FullName}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -69,7 +69,7 @@
                              </DataTemplate>
                          </DataGridTemplateColumn>
 
-                         <DataGridTemplateColumn Header="Місце" Width="*">
+                         <DataGridTemplateColumn Header="Місце" Width="Auto">
 							 <DataTemplate DataType="models:Session">
 								 <StackPanel>
 									 <TextBlock Text="{Binding Place.PlaceNumber}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center">

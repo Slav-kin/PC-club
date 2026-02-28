@@ -14,7 +14,6 @@
     <Compile Remove="Views\NewFolder\**" />
     <EmbeddedResource Remove="Views\NewFolder\**" />
     <None Remove="Views\NewFolder\**" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>

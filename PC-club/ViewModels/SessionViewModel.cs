@@ -34,12 +34,12 @@ namespace PC_club.ViewModels
 
         #region NewSessionVarible
 
-
         [ObservableProperty]
         private ObservableCollection<Client> _availableClients = new();
 
         [ObservableProperty]
         private ObservableCollection<Place> _availablePlace = new();
+
         [ObservableProperty]
         private ObservableCollection<string> _availableAcaunt = new() { "Власний", "Клубний" };
 
@@ -54,7 +54,6 @@ namespace PC_club.ViewModels
 
         [ObservableProperty]
         private string? _selectedGameAcaunt;
-
 
         #endregion
 
@@ -98,6 +97,7 @@ namespace PC_club.ViewModels
             CountActiveSessions = sessionsFromDb.Count(s => s.Status == "active");
 
             CountTotalEarnToday = sessionsFromDb.Sum(s => s.TotalPrice ?? 0m);
+
         }
 
 
@@ -107,9 +107,8 @@ namespace PC_club.ViewModels
             AvailableClients = new ObservableCollection<Client>(_db.Clients.ToList());
             AvailablePlace = new ObservableCollection<Place>(_db.Places.Where(p => p.Status == "active").ToList());
          
-
             IsAddSessionWindowOpen = true;
-        }
+        }   
 
         [RelayCommand]
         private void SaveNewSession()
@@ -122,6 +121,7 @@ namespace PC_club.ViewModels
                 System.Diagnostics.Debug.WriteLine($"Помилка: Тариф не знайдено для місця з ID {SelectedPlace.PlaceId}");
                 return;
             }
+
             string dbAccountValue = SelectedGameAcaunt switch
             {
                 "Власний" => "own",
@@ -144,7 +144,7 @@ namespace PC_club.ViewModels
             var placeInDb = _db.Places.FirstOrDefault(p => p.PlaceId == SelectedPlace.PlaceId);
             if (placeInDb != null)
             {
-                placeInDb.Status = "inactive"; // Або статус, який ти використовуєш для зайнятих ПК
+                placeInDb.Status = "inactive";
             }
 
             _db.SaveChanges();

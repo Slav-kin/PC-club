@@ -20,7 +20,7 @@
                 <!--<Button Content="Місця" HorizontalAlignment="Stretch"/>-->
                 <Button Content="Графік" HorizontalAlignment="Stretch" Classes="nav"/>
                 <Button Content="Сесії" Command="{Binding NavigateToSessionsCommand}" Classes.Active="{Binding IsSessionsSelected}" Classes="nav" HorizontalAlignment="Stretch"/>
-                <Button Content="Бронювання" HorizontalAlignment="Stretch" Classes="nav"/>
+                <Button Content="Бронювання" Command="{Binding NavigateToBookingsCommand}" Classes.Active="{Binding IsBookingSelected}" HorizontalAlignment="Stretch" Classes="nav"/>
                 <!--<Button Content="Тарифи" HorizontalAlignment="Stretch"/>-->
             </StackPanel>
         </Border>
@@ -38,6 +38,10 @@
             
             <DataTemplate DataType="{x:Type vm:HomeViewModel}">
                 <views:HomeView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:BookingsViewModel}">
+				<views:BookingsView />
             </DataTemplate>
         </ContentControl.DataTemplates>
      </ContentControl>
