@@ -8,9 +8,9 @@ public partial class Place
     public string CurrentClientNickname =>
         Sessions?.FirstOrDefault(s => s.Status == "active")?.Client?.Nickname ?? "Вільно";
 
-    // Якщо є активна сесія - рамка червона, якщо немає - зелена
     public string StatusColor =>
-        Sessions?.Any(s => s.Status == "active") == true ? "#ff5252" : "#4caf50";
+     Sessions?.Any(s => s.Status == "active") == true ? "#ff5252" :
+     Bookings.Any(b => b.Status == "active") == true ? "#f0b100" : "#4caf50";
 
     public string PcType => PlaceNumber switch
     {

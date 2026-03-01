@@ -14,7 +14,7 @@
                          <TextBlock Text="Бронювання" Foreground="{DynamicResource WhiteText}" FontSize="24"></TextBlock>
                          <TextBlock Text="Управління бронюваннями місць" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"/>
                      </StackPanel>
-                     <Button Grid.Column="1" Content="+ Нова сесія" Padding="16,8" Background="{DynamicResource AddButton}"
+                     <Button Grid.Column="1" Content="+ Нове бронювання" Command="{Binding OpenAddBookingWindowCommand}" Padding="16,8" Background="{DynamicResource AddButton}"
                       Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" CornerRadius="10"></Button>
                  </Grid>
                  <UniformGrid Columns="3" Grid.Row="1" >
@@ -96,7 +96,7 @@
                            <DataGridTemplateColumn Header="Тривалість" Width="*">
 					     		 <DataTemplate DataType="models:Booking"> 
 							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-								     	 <TextBlock Text="{Binding BookLengthMinutes}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+								     	 <TextBlock Text="{Binding BookLengthMinutes, StringFormat='{}{0} годин'}" Foreground="{DynamicResource WhiteText}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
@@ -112,15 +112,61 @@
                             <DataGridTemplateColumn Header="Дії" Width="*">
 					     		 <DataTemplate> 
 							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-								     	 <Button></Button>
+								     	 <Button Content="Скасувати" Command="{Binding $parent[UserControl].((vm:BookingsViewModel)DataContext).CancelBookingCommand}" 
+                                                 CommandParameter="{Binding}" Foreground="#a78bfa"></Button>
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
-                         
-                         
-                         
+   
                          </DataGrid.Columns>
                     </DataGrid>
                 </Border>
+
+                <Grid IsVisible="{Binding IsAddBookingWindowOpen}" Grid.RowSpan="3">
+                    <Border Background="#1a1a1a" CornerRadius="12" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,0,0,0">
+						<StackPanel Spacing="10">
+							<TextBlock Text="Нове бронювання" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource WhiteText}"/>
+
+                            <TextBlock Text="Клієнт"  Foreground="{DynamicResource SecondText}" HorizontalAlignment="Stretch" FontWeight="Medium" Margin="0,0,0,-10"/>
+                              <ComboBox ItemsSource="{Binding AvailableClients}" SelectedItem="{Binding SelectedClient}" DisplayMemberBinding="{Binding FullName}"
+                               Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}" HorizontalAlignment="Stretch"> 
+                              </ComboBox>
+
+                            <TextBlock Text="Місце"  Foreground="{DynamicResource SecondText}" FontWeight="Medium"/>
+                              <ComboBox ItemsSource="{Binding AvailablePlace}" SelectedItem="{Binding SelectedPlace }" DisplayMemberBinding="{Binding PlaceNumber, StringFormat='#{0}'}"
+                               Foreground="{DynamicResource WhiteText}" Background="{DynamicResource AddButoonPlaceBackColor}" HorizontalAlignment="Stretch"></ComboBox>
+
+                            <TextBlock Text="Дата"  Foreground="{DynamicResource SecondText}" FontWeight="Medium"/>
+        
+                            <CalendarDatePicker SelectedDate="{Binding SelectedDateTime, Mode=TwoWay}"
+                                Watermark="дд.мм.рррр"
+                                Background="{DynamicResource AddButoonPlaceBackColor}"
+                                Foreground="{DynamicResource WhiteText}"
+                                CornerRadius="10"
+                                HorizontalAlignment="Stretch"/>
+
+                            <TextBlock Text="Час початку"  Foreground="{DynamicResource SecondText}" FontWeight="Medium"/>
+                            <TimePicker SelectedTime="{Binding SelectedTime, Mode=TwoWay}"
+                                Background="{DynamicResource AddButoonPlaceBackColor}"
+                                Foreground="{DynamicResource WhiteText}"
+                                CornerRadius="10"
+                                HorizontalAlignment="Stretch"/>
+
+                            <TextBlock Text="Тривалість" Foreground="{DynamicResource SecondText}" FontWeight="Medium"></TextBlock>
+                            <NumericUpDown Value="{Binding BookingDuration}"
+                             Maximum="12" Minimum="1" FormatString="0 'год'"
+                             Background="{DynamicResource AddButoonPlaceBackColor}"
+                             Foreground="{DynamicResource WhiteText}"
+                             CornerRadius="10"
+                             HorizontalAlignment="Stretch"/>
+								
+                            <Grid ColumnDefinitions="*,*" Margin="0,15,0,0">
+                                <Button Grid.Column="0" Content="Скасувати" Command="{Binding CloseAddSessionWindowCommand}" Background="{DynamicResource SideMenuPrimaryBackground}" Foreground="{DynamicResource WhiteText}" CornerRadius="10" HorizontalAlignment="Center" Padding="48,12" FontSize="16"></Button>
+                                <Button Grid.Column="1" Content="Створити" Command="{Binding SaveNewBookingCommand}" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" CornerRadius="10" HorizontalAlignment="Center" Padding="48,12" FontSize="16"></Button>
+                           </Grid>
+                            
+                        </StackPanel>
+                    </Border>
+                </Grid>
             </Grid>
 </UserControl>

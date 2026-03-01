@@ -24,7 +24,7 @@ namespace PC_club.ViewModels
 
         public HomeViewModel()
         {
-            PCPlaces = new ObservableCollection<Place>();
+            PCPlaces = new ObservableCollection<Place>();   
             RefreshHall();
         }
 
@@ -35,6 +35,7 @@ namespace PC_club.ViewModels
                 var data = db.Places
                     .Include(p => p.Sessions).ThenInclude(s => s.Client)
                     .Include(p => p.Sessions).ThenInclude(s => s.Tariff)
+                    .Include(p => p.Bookings)
                     .ToList();
 
                 PCPlaces.Clear();

@@ -27,5 +27,15 @@ namespace PC_club.Models
 
         // Також зручно мати окремо час
         public string DisplayTime => BookTime.ToString("HH:mm");
+
+        public bool CanStartSessionFromBooking
+        {
+            get
+            {
+                if (Status != "active") return false;
+                var now = DateTime.Now;
+                return now >= BookTime.AddMinutes(-5) && now <= BookTime.AddMinutes(15);
+            }
+        }
     }
 }

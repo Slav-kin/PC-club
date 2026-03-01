@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using PC_club.Models;
 using System;
 using System.Collections.Generic;
@@ -44,7 +46,7 @@ namespace PC_club.ViewModels
         private Place? _selectedPlace;
 
         [ObservableProperty]
-        private DateTimeOffset _selectedDateTime = DateTimeOffset.Now;
+        private DateTime? _selectedDateTime = DateTime.Now;
 
         [ObservableProperty]
         private TimeSpan _selectedTime = DateTime.Now.TimeOfDay;
@@ -55,15 +57,31 @@ namespace PC_club.ViewModels
         [ObservableProperty]
         private ObservableCollection<string> _bookStatuses = new();
 
-
         [ObservableProperty]
         private bool _isAddBookingWindowOpen;
         #endregion
 
+
+        #region StartSessionVariables
+
+        [ObservableProperty]
+        private bool _isStartSessionWindowOpen;
+
+        [ObservableProperty]
+        private Booking? _bookingToStart;
+
+        [ObservableProperty]
+        private ObservableCollection<string> _accountTypes = new() { "own", "club" };
+
+        [ObservableProperty]
+        private string _selectedAccountType = "club";
+
+        #endregion
+
         public BookingsViewModel(PcClubContext db)
         {
-            _db = db;   
-          
+            _db = db;
+
             LoadBookings();
         }
 
@@ -89,5 +107,125 @@ namespace PC_club.ViewModels
 
             Bookings = new ObservableCollection<Booking>(bookingList);
         }
+
+        [RelayCommand]
+        private void OpenAddBookingWindow()
+        {
+            AvailableClients = new ObservableCollection<Client>(_db.Clients.ToList());
+            AvailablePlace = new ObservableCollection<Place>(_db.Places.Where(p => p.Status == "active").ToList());
+
+            IsAddBookingWindowOpen = true;
+        }
+
+        [RelayCommand]
+        private void CloseAddSessionWindow()
+        {
+            IsAddBookingWindowOpen = false;
+
+            SelectedClient = null;
+            SelectedPlace = null;
+        }
+
+        [RelayCommand]
+        private void SaveNewBooking()
+        {
+            // 1. Проста перевірка
+            if (SelectedClient == null || SelectedPlace == null) return;
+
+            // 2. Об'єднуємо Дату з DatePicker та Час із TimePicker
+            DateTime fullStartTime = SelectedDateTime.Value.Date.Add(SelectedTime);
+
+            // 3. Створюємо новий об'єкт для бази
+            var newBooking = new Booking
+            {
+                ClientId = SelectedClient.ClientId,
+                PlaceId = SelectedPlace.PlaceId,
+                BookTime = fullStartTime,
+                BookLengthMinutes = BookingDuration,
+                Status = "active" // Або "pending"
+            };
+
+            // 4. Зберігаємо в базу
+            _db.Bookings.Add(newBooking);
+            _db.SaveChanges();
+
+            // 5. Оновлюємо список і закриваємо вікно
+            LoadBookings();
+            CloseAddSessionWindow();
+        }
+
+        [RelayCommand]
+        private void CancelBooking(Booking booking)
+        {
+            if (booking == null) return;
+            var bookingToCancel = _db.Bookings.Find(booking.BookId);
+            if (bookingToCancel != null && bookingToCancel.Status != "cancel")
+            {
+                bookingToCancel.Status = "cancel";
+                _db.SaveChanges();
+                LoadBookings();
+            }
+        }
+
+        [RelayCommand]
+        private void OpenStartSessionWindow(Booking booking)
+        {
+            if (booking == null) return;
+            BookingToStart = booking;
+            SelectedAccountType = "club";
+            IsStartSessionWindowOpen = true;
+        }
+
+        [RelayCommand]
+        private void CloseStartSessionWindow()
+        {
+            IsStartSessionWindowOpen = false;
+            BookingToStart = null;
+        }
+
+
+        private Tariff? GetTariffForPlace(int PlaceId)
+        {
+
+            string expectedTariffName = PlaceId switch
+            {
+                <= 5 => "basic",
+                <= 10 => "consol",
+                <= 15 => "pro",
+                _ => "vip"
+            };
+
+            return _db.Tariffs.FirstOrDefault(t => t.TariffName == expectedTariffName);
+        }
+
+        [RelayCommand]
+        private void StartSessionFromBooking()
+        {
+            if (BookingToStart == null) return;
+
+            var tariff = GetTariffForPlace(SelectedPlace.PlaceId);
+            if (tariff == null)
+            {
+                System.Diagnostics.Debug.WriteLine($"Помилка: Тариф не знайдено для місця з ID {SelectedPlace.PlaceId}");
+                return;
+            }
+
+            var newSession = new Session
+            {
+                ClientId = BookingToStart.ClientId,
+                PlaceId = BookingToStart.PlaceId,
+                StartSession = DateTime.Now,
+                Status = "active",
+                GameAccount = SelectedAccountType,
+                TariffId = tariff.TariffId
+            };
+
+            var bookingInDb = _db.Bookings.Find(BookingToStart.BookId);
+            if (bookingInDb != null)
+            {
+                bookingInDb.Status = "completed";
+            }
+        }
+
     }
 }
