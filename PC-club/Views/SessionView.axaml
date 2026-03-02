@@ -126,7 +126,7 @@
                          <DataGridTemplateColumn Header="Дії" Width="*">
 							 <DataTemplate DataType="models:Session"> 
 								 <StackPanel>
-									 <Button Content="Завершити" Command="{Binding $parent[UserControl].((vm:SessionViewModel)DataContext).EndActiveSessionCommand}" CommandParameter="{Binding}" Foreground="#a78bfa"></Button>
+									 <Button Content="Завершити" Command="{Binding $parent[UserControl].((vm:SessionViewModel)DataContext).EndActiveSessionCommand}" CommandParameter="{Binding}" Foreground="{DynamicResource ActionButton}"></Button>
                                  </StackPanel>
                              </DataTemplate>
                          </DataGridTemplateColumn>

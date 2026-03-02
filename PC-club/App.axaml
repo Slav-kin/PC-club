@@ -27,6 +27,7 @@
         <SolidColorBrush x:Key="AddButton">#7c3aed</SolidColorBrush>
         <SolidColorBrush x:Key="WhiteText">White</SolidColorBrush>
         <SolidColorBrush x:Key="AddButoonPlaceBackColor">#2a2a2a</SolidColorBrush>
+        <SolidColorBrush x:Key="ActionButton">#a78bfa</SolidColorBrush>
     </Application.Resources>
 
 </Application>

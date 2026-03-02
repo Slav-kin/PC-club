@@ -203,10 +203,10 @@ namespace PC_club.ViewModels
         {
             if (BookingToStart == null) return;
 
-            var tariff = GetTariffForPlace(SelectedPlace.PlaceId);
+            var tariff = GetTariffForPlace(BookingToStart.PlaceId);
             if (tariff == null)
             {
-                System.Diagnostics.Debug.WriteLine($"Помилка: Тариф не знайдено для місця з ID {SelectedPlace.PlaceId}");
+                System.Diagnostics.Debug.WriteLine($"Помилка: Тариф не знайдено для місця з ID {BookingToStart.PlaceId}");
                 return;
             }
 
@@ -220,11 +220,24 @@ namespace PC_club.ViewModels
                 TariffId = tariff.TariffId
             };
 
-            var bookingInDb = _db.Bookings.Find(BookingToStart.BookId);
+            var bookingInDb = _db.Bookings.Find(BookingToStart.BookId); 
             if (bookingInDb != null)
             {
                 bookingInDb.Status = "completed";
             }
+
+            var place = _db.Places.Find(BookingToStart.PlaceId);
+            if (place != null)
+            {
+                place.Status = "inactive";
+            }
+
+            _db.Sessions.Add(newSession);
+            _db.SaveChanges();
+
+            
+            LoadBookings();
+            CloseStartSessionWindow();
         }
 
     }

@@ -109,11 +109,18 @@
                                  </DataTemplate>
                             </DataGridTemplateColumn>
 
-                            <DataGridTemplateColumn Header="Дії" Width="*">
+                            <DataGridTemplateColumn Header="Дії" Width="2*">
 					     		 <DataTemplate> 
-							     	 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+							     	 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                         
+                                           <Button Content="Почати" 
+                                                 Command="{Binding $parent[UserControl].((vm:BookingsViewModel)DataContext).OpenStartSessionWindowCommand}" 
+                                                 CommandParameter="{Binding}" IsVisible="{Binding CanStartSessionFromBooking}"
+                                                 Background="#4caf50" Foreground="White" Padding="8,3" CornerRadius="5"/>
+
 								     	 <Button Content="Скасувати" Command="{Binding $parent[UserControl].((vm:BookingsViewModel)DataContext).CancelBookingCommand}" 
-                                                 CommandParameter="{Binding}" Foreground="#a78bfa"></Button>
+                                                 CommandParameter="{Binding}" Foreground="{DynamicResource ActionButton}" ></Button>
+                                              
                                      </StackPanel>
                                  </DataTemplate>
                             </DataGridTemplateColumn>
@@ -165,6 +172,24 @@
                                 <Button Grid.Column="1" Content="Створити" Command="{Binding SaveNewBookingCommand}" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" CornerRadius="10" HorizontalAlignment="Center" Padding="48,12" FontSize="16"></Button>
                            </Grid>
                             
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid IsVisible="{Binding IsStartSessionWindowOpen}" Grid.RowSpan="5">
+					<Border Background="#1a1a1a" CornerRadius="12" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24"  Margin="0,0,0,0">
+						<StackPanel Spacing="10">
+							<TextBlock Text="Запуск сесії" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource WhiteText}"/>
+                            <TextBlock Text="Клієнт прийшов. Виберіть тип акаунту для початку гри" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"/>
+                        
+                            <TextBlock Text="Тип акаунту" Foreground="{DynamicResource SecondText}" FontWeight="Medium" Margin="0,10,0,0"/>
+                            <ComboBox ItemsSource="{Binding AccountTypes}" SelectedItem="{Binding SelectedAccountType}" HorizontalAlignment="Stretch" 
+                             Foreground="{DynamicResource WhiteText}"  Background="{DynamicResource AddButoonPlaceBackColor}"/>
+
+                            <Grid ColumnDefinitions="*,*" Margin="0,15,0,0">
+                                <Button Grid.Column="0" Content="Скасувати" Command="{Binding CloseAddSessionWindowCommand}" Background="{DynamicResource SideMenuPrimaryBackground}" Foreground="{DynamicResource WhiteText}" CornerRadius="10" HorizontalAlignment="Center" Padding="48,12" FontSize="16"></Button>
+                                <Button Grid.Column="1" Content="Почати сесію" Command="{Binding StartSessionFromBookingCommand}" Background="{DynamicResource AddButton}" Foreground="{DynamicResource WhiteText}" CornerRadius="10" HorizontalAlignment="Center" Padding="48,12" FontSize="16"></Button>
+                           </Grid>
                         </StackPanel>
                     </Border>
                 </Grid>

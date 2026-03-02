@@ -96,7 +96,7 @@
                         <DataTemplate DataType="models:Client">
 							  <StackPanel VerticalAlignment="Center" >
                                  <Border CornerRadius="10" HorizontalAlignment="Center" Padding="8,4">
-								    <Button Content="Редагувати" Foreground="#a78bfa"  Command="{Binding $parent[UserControl].((vm:ClientsViewModel)DataContext).OpenEditClientWindow}"
+								    <Button Content="Редагувати" Foreground="{DynamicResource ActionButton}"  Command="{Binding $parent[UserControl].((vm:ClientsViewModel)DataContext).OpenEditClientWindow}"
                             CommandParameter="{Binding}"></Button>
                                  </Border>
                               </StackPanel>
