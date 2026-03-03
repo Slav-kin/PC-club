@@ -33,6 +33,7 @@ namespace PC_club
             servicecollection.AddTransient<ClientsViewModel>();
             servicecollection.AddTransient<SessionViewModel>();
             servicecollection.AddTransient<BookingsViewModel>();
+            servicecollection.AddTransient<AccessibilityViewModel>();
 
             // збираємо сервіси
             Services = servicecollection.BuildServiceProvider();

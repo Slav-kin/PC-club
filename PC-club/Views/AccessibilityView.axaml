@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PC_club.ViewModels"
+             xmlns:models="using:PC_club.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PC_club.Views.AccessibilityView"
+             x:DataType="vm:AccessibilityViewModel">
+
+
+            <Grid Background="{DynamicResource PrimaryBackground}" RowDefinitions="Auto,Auto,*">
+                 <Grid Grid.Row="0" VerticalAlignment="Center" RowDefinitions="Auto,*" Margin="15">
+                     <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+                         <TextBlock Text="Доступність місць" Foreground="{DynamicResource WhiteText}" FontSize="24"></TextBlock>
+                         <TextBlock Text="Графік зайнятості по годинах" FontSize="14" Foreground="{DynamicResource PrimarySecondText}"/>
+                     </StackPanel>
+                     <StackPanel Grid.Row="1" HorizontalAlignment="Left">
+						 <TextBlock Background="Red" Width="5"></TextBlock>
+                     </StackPanel>
+                 </Grid>
+            </Grid>
+
+</UserControl>
