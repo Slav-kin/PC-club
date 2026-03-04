@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using PC_club.Models;
+using PC_club.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -12,6 +13,7 @@ namespace PC_club.ViewModels
     public partial class SessionViewModel : ViewModelBase
     {
         private readonly PcClubContext _db;
+        private readonly SessionEstimatesStore _estimatesStore;
 
         private ObservableCollection<Session> _sessions = new();
         public ObservableCollection<Session> Sessions
@@ -55,6 +57,9 @@ namespace PC_club.ViewModels
         [ObservableProperty]
         private string? _selectedGameAcaunt;
 
+        [ObservableProperty]
+        private int? _estimatedDurationHours; // Орієнтовна тривалість у годинах
+
         #endregion
 
         private Tariff? GetTariffForPlace(int PlaceId)
@@ -71,9 +76,10 @@ namespace PC_club.ViewModels
             return _db.Tariffs.FirstOrDefault(t => t.TariffName == expectedTariffName);
         }
 
-        public SessionViewModel(PcClubContext db)
+        public SessionViewModel(PcClubContext db, SessionEstimatesStore estimatesStore)
         {
             _db = db;
+            _estimatesStore = estimatesStore;   
 
             LoadSessions();
         }
@@ -140,11 +146,18 @@ namespace PC_club.ViewModels
             };
 
             _db.Sessions.Add(newSession);
+            _db.SaveChanges();
 
             var placeInDb = _db.Places.FirstOrDefault(p => p.PlaceId == SelectedPlace.PlaceId);
             if (placeInDb != null)
             {
                 placeInDb.Status = "inactive";
+            }
+
+            if (EstimatedDurationHours.HasValue && EstimatedDurationHours.Value > 0)
+            {
+                var expectedEndTime = DateTime.Now.AddHours(EstimatedDurationHours.Value);
+                _estimatesStore.SetEstimate(newSession.SessionId, expectedEndTime);
             }
 
             _db.SaveChanges();
@@ -206,5 +219,7 @@ namespace PC_club.ViewModels
             // 5. Оновлюємо список і статистику на екрані
             LoadSessions();
         }
+
+
     }
 }

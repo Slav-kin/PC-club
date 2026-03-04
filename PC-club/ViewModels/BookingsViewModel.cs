@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using PC_club.Models;
+using PC_club.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace PC_club.ViewModels
     public partial class BookingsViewModel : ViewModelBase
     {
         private readonly PcClubContext _db;
+        private readonly SessionEstimatesStore _estimatesStore;
 
         [ObservableProperty]
         private ObservableCollection<Booking> _bookings = new();
@@ -78,9 +80,10 @@ namespace PC_club.ViewModels
 
         #endregion
 
-        public BookingsViewModel(PcClubContext db)
+        public BookingsViewModel(PcClubContext db, SessionEstimatesStore estimatesStore)
         {
             _db = db;
+            _estimatesStore = estimatesStore;
 
             LoadBookings();
         }
@@ -235,7 +238,17 @@ namespace PC_club.ViewModels
             _db.Sessions.Add(newSession);
             _db.SaveChanges();
 
-            
+            if (BookingToStart.BookLengthMinutes > 0)
+            {
+                // Просто додаємо введені адміном години до поточного часу
+                DateTime expectedEndTime = DateTime.Now.AddHours(BookingToStart.BookLengthMinutes);
+
+                // Зберігаємо в наш JSON
+                _estimatesStore.SetEstimate(newSession.SessionId, expectedEndTime);
+            }
+
+
+
             LoadBookings();
             CloseStartSessionWindow();
         }

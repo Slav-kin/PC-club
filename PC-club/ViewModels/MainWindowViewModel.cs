@@ -15,6 +15,7 @@ namespace PC_club.ViewModels
         [ObservableProperty] private bool _isClientsSelected;
         [ObservableProperty] private bool _isSessionsSelected;
         [ObservableProperty] private bool _isBookingSelected;
+        [ObservableProperty] private bool _isAccessibilitySelected;
 
         public MainWindowViewModel()
         {
@@ -60,12 +61,21 @@ namespace PC_club.ViewModels
             IsBookingSelected = true;
         }
 
+        [RelayCommand]
+        private void NavigateToAccessibility()
+        {
+            CurrentPage = App.Services.GetRequiredService<AccessibilityViewModel>();
+            ResetSelection();
+            IsAccessibilitySelected = true;
+        }
+
         private void ResetSelection()
         {
             IsHomeSelected = false;
             IsClientsSelected = false;
             IsSessionsSelected = false;
             IsBookingSelected = false;
+            IsAccessibilitySelected = false;
         }
     }
 }

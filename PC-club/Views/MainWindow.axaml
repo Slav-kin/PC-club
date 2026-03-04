@@ -18,7 +18,7 @@
                 <Button Content="Головна" Command="{Binding NavigateToHomeCommand}" Classes.Active="{Binding IsHomeSelected}" Classes="nav" HorizontalAlignment="Stretch"/>
                 <Button Content="Клієнти" Command="{Binding NavigateToClientsCommand}" Classes.Active="{Binding IsClientsSelected}" Classes="nav" HorizontalAlignment="Stretch"/>
                 <!--<Button Content="Місця" HorizontalAlignment="Stretch"/>-->
-                <Button Content="Графік" HorizontalAlignment="Stretch" Classes="nav"/>
+                <Button Content="Графік" Command="{Binding NavigateToAccessibilityCommand}" Classes.Active="{Binding IsAccessibilitySelected}" HorizontalAlignment="Stretch" Classes="nav"/>
                 <Button Content="Сесії" Command="{Binding NavigateToSessionsCommand}" Classes.Active="{Binding IsSessionsSelected}" Classes="nav" HorizontalAlignment="Stretch"/>
                 <Button Content="Бронювання" Command="{Binding NavigateToBookingsCommand}" Classes.Active="{Binding IsBookingSelected}" HorizontalAlignment="Stretch" Classes="nav"/>
                 <!--<Button Content="Тарифи" HorizontalAlignment="Stretch"/>-->
@@ -42,6 +42,10 @@
 
             <DataTemplate DataType="{x:Type vm:BookingsViewModel}">
 				<views:BookingsView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:AccessibilityViewModel}">
+                <views:AccessibilityView />
             </DataTemplate>
         </ContentControl.DataTemplates>
      </ContentControl>

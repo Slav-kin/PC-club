@@ -4,6 +4,7 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using PC_club.Models;
+using PC_club.Services;
 using PC_club.ViewModels;
 using PC_club.Views;
 using System;
@@ -28,6 +29,8 @@ namespace PC_club
             // реєструємо контекст бази даних (створюється новий екземпляр при кожному запиті)
             servicecollection.AddTransient<PcClubContext>();
 
+            servicecollection.AddSingleton<SessionEstimatesStore>();
+
             // реєструємо твої viewmodel
             servicecollection.AddTransient<HomeViewModel>();
             servicecollection.AddTransient<ClientsViewModel>();
@@ -35,8 +38,14 @@ namespace PC_club
             servicecollection.AddTransient<BookingsViewModel>();
             servicecollection.AddTransient<AccessibilityViewModel>();
 
+            servicecollection.AddSingleton<MainWindowViewModel>();
+
+
             // збираємо сервіси
-            Services = servicecollection.BuildServiceProvider();
+            Services = servicecollection.BuildServiceProvider();        
+
+            var EstimatesStore = Services.GetRequiredService<SessionEstimatesStore>();
+            EstimatesStore.LoadEstimates();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
