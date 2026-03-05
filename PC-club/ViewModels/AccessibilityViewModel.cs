@@ -1,33 +1,67 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.EntityFrameworkCore; // Обов'язково для Include
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
 using PC_club.Models;
 using PC_club.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-
 namespace PC_club.ViewModels
 {
-    public partial class AccessibilityViewModel: ViewModelBase
+    public partial class AccessibilityViewModel : ViewModelBase
     {
         private readonly PcClubContext _db;
         private readonly SessionEstimatesStore _estimatesStore;
 
-
         #region Timeline Variables
 
-        // Поточна дата, яку показує графік (щоб можна було гортати дні)
         [ObservableProperty]
         private DateTime _selectedDate = DateTime.Today;
 
-        // Список рядків для нашого XAML
         [ObservableProperty]
         private ObservableCollection<PlaceTimelineRow> _timelineRows = new();
 
-        // Константи для розмірів (як ти і просив 40 на 52)
         private const double PixelsPerHour = 40.0;
         private const double PixelsPerMinute = PixelsPerHour / 60.0;
+
+        #endregion
+
+        #region Navigation Commands
+
+        [RelayCommand]
+        private void PreviousDay()
+        {
+            // Віднімаємо 1 день від поточної вибраної дати
+            SelectedDate = SelectedDate.AddDays(-1);
+        }
+
+        [RelayCommand]
+        private void NextDay()
+        {
+            // Додаємо 1 день
+            SelectedDate = SelectedDate.AddDays(1);
+        }
+
+        [RelayCommand]
+        private void GoToToday()
+        {
+            // Повертаємо на сьогоднішній день
+            SelectedDate = DateTime.Today;
+        }
+
+        #endregion
+
+        #region couters for short stats
+
+        [ObservableProperty]
+        private int _countActiveSessions;
+
+        [ObservableProperty]
+        private int _countTodayTotalSessions;
+
+        [ObservableProperty]
+        private int _countBookingsToday;
 
         #endregion
 
@@ -48,22 +82,29 @@ namespace PC_club.ViewModels
         {
             var newRows = new ObservableCollection<PlaceTimelineRow>();
 
-            // Межі вибраного дня (наприклад: 20.02.2026 00:00:00 до 21.02.2026 00:00:00)
+            // Межі вибраного дня (наприклад: від 00:00 до 23:59:59)
             DateTime dayStart = SelectedDate.Date;
             DateTime dayEnd = dayStart.AddDays(1);
 
-            // 1. Отримуємо всі місця
+            // 1. Завантажуємо всі необхідні дані з БД
             var places = _db.Places.ToList();
-
-            // 2. Отримуємо всі сесії та бронювання (які перетинаються з вибраним днем)
             var allSessions = _db.Sessions.Include(s => s.Client).ToList();
-            // Якщо маєш бронювання: var allBookings = _db.Bookings.Include(b => b.Client).ToList();
+
+            // РОЗБЛОКУВАЛИ БРОНЮВАННЯ: Завантажуємо їх з клієнтами
+            var allBookings = _db.Bookings.Include(b => b.Client).ToList();
+
+            // Змінні для статистики знизу екрана
+            int activeSessions = 0;
+            int todaySessions = 0;
+            int todayBookings = 0;
 
             foreach (var place in places)
             {
                 var row = new PlaceTimelineRow { PlaceName = $"Місце #{place.PlaceId}" };
 
-                // --- ДОДАЄМО СЕСІЇ ---
+                // ==========================================
+                // 1. МАЛЮЄМО СЕСІЇ
+                // ==========================================
                 var placeSessions = allSessions.Where(s => s.PlaceId == place.PlaceId).ToList();
 
                 foreach (var session in placeSessions)
@@ -71,17 +112,21 @@ namespace PC_club.ViewModels
                     if (!session.StartSession.HasValue) continue;
 
                     DateTime itemStart = session.StartSession.Value;
-                    // Беремо час завершення: або фактичний, або орієнтовний (з нашого JSON)
+
+                    // Шукаємо кінець: фактичний -> JSON оцінка -> або хоча б +1 година
                     DateTime itemEnd = session.EndSession ?? _estimatesStore.GetEstimate(session.SessionId) ?? itemStart.AddHours(1);
 
-                    // ПЕРЕВІРКА 1: Чи потрапляє ця сесія у вибраний день взагалі?
+                    // Якщо сесія ВЗАГАЛІ не потрапляє у вибраний день - пропускаємо
                     if (itemEnd <= dayStart || itemStart >= dayEnd) continue;
 
-                    // ПЕРЕВІРКА 2: Обрізка на межі опівночі (щоб блок не виліз за екран)
+                    // Збираємо статистику (для нижніх карток)
+                    if (session.Status == "active") activeSessions++;
+                    if (itemStart.Date == dayStart.Date) todaySessions++;
+
+                    // ОБРІЗКА (щоб блок не вилазив за межі 00:00 та 24:00)
                     DateTime drawStart = itemStart < dayStart ? dayStart : itemStart;
                     DateTime drawEnd = itemEnd > dayEnd ? dayEnd : itemEnd;
 
-                    // МАТЕМАТИКА ПІКСЕЛІВ
                     double marginMinutes = (drawStart - dayStart).TotalMinutes;
                     double durationMinutes = (drawEnd - drawStart).TotalMinutes;
 
@@ -90,17 +135,61 @@ namespace PC_club.ViewModels
                         Label = session.Client?.Nickname ?? "Гость",
                         MarginLeft = marginMinutes * PixelsPerMinute,
                         Width = durationMinutes * PixelsPerMinute,
-                        Color = session.Status == "active" ? "#5C1B1B" : "#1B5C28", // Червоний якщо активна, синій якщо закрита
+                        Color = session.Status == "active" ? "#82181a" : "#5C1B1B", // Активна (червоний) / Закрита (зелений)
                         ToolTipText = $"Сесія: {itemStart:HH:mm} - {itemEnd:HH:mm}"
                     });
                 }
 
-                // --- ТУТ ТАК САМО МОЖНА ДОДАТИ БРОНЮВАННЯ (іншим кольором, наприклад жовтим #EAB308) ---
+                // ==========================================
+                // 2. МАЛЮЄМО БРОНЮВАННЯ
+                // ==========================================
+                // Беремо всі бронювання для цього місця, які ще не "completed" (бо completed стали сесіями)
+                var placeBookings = allBookings.Where(b => b.PlaceId == place.PlaceId && b.Status != "completed").ToList();
+
+                foreach (var booking in placeBookings)
+                {
+                    // УВАГА: Якщо в тебе поле називається не StartTime, а інакше - зміни тут!
+              
+
+                    DateTime bookStart = booking.BookTime;
+
+                    // УВАГА: Ми обговорювали, що твоє BookLengthMinutes насправді зберігає ГОДИНИ. 
+                    // Тому я використовую AddHours. Якщо там хвилини - зміни на AddMinutes.
+                    DateTime bookEnd = bookStart.AddHours(booking.BookLengthMinutes);
+
+                    // Якщо бронь не потрапляє у вибраний день - пропускаємо
+                    if (bookEnd <= dayStart || bookStart >= dayEnd) continue;
+
+                    // Статистика
+                    if (bookStart.Date == dayStart.Date) todayBookings++;
+
+                    // ОБРІЗКА
+                    DateTime drawStart = bookStart < dayStart ? dayStart : bookStart;
+                    DateTime drawEnd = bookEnd > dayEnd ? dayEnd : bookEnd;
+
+                    double marginMinutes = (drawStart - dayStart).TotalMinutes;
+                    double durationMinutes = (drawEnd - drawStart).TotalMinutes;
+
+                    row.Items.Add(new TimelineItem
+                    {
+                        Label = booking.Client?.Nickname ?? "Бронь",
+                        MarginLeft = marginMinutes * PixelsPerMinute,
+                        Width = durationMinutes * PixelsPerMinute,
+                        Color = "#733e0a", // Коричневий для бронювань
+                        ToolTipText = $"Бронь: {bookStart:HH:mm} - {bookEnd:HH:mm}"
+                    });
+                }
 
                 newRows.Add(row);
             }
 
+            // Оновлюємо список на екрані
             TimelineRows = newRows;
+
+            // Оновлюємо статистику у футері
+            //CountActiveSessions = activeSessions;
+            //CountTodayTotalSessions = todaySessions;
+            //CountBookingsToday = todayBookings;
         }
     }
 }
