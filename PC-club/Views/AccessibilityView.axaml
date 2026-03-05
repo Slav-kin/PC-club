@@ -9,7 +9,7 @@
              x:DataType="vm:AccessibilityViewModel">
 
 
-            <Grid Background="{DynamicResource PrimaryBackground}" RowDefinitions="Auto,Auto,*">
+            <Grid Background="{DynamicResource PrimaryBackground}" RowDefinitions="Auto,Auto,*,Auto">
                 <Grid Grid.Row="0" ColumnDefinitions="*, Auto" VerticalAlignment="Center" Margin="15">
              <StackPanel Grid.Column="0" VerticalAlignment="Center">
                  <TextBlock Text="Доступність місць" Foreground="{DynamicResource WhiteText}" FontSize="24"></TextBlock>
@@ -152,7 +152,7 @@
             </ScrollViewer>
         </Border>
 
-       <!-- <UniformGrid Grid.Row="3" Columns="3" Margin="0,20,0,0">
+       <UniformGrid Grid.Row="3" Columns="3" Margin="0,20,0,0">
             <Border Background="#121214" CornerRadius="10" Padding="20" Margin="0,0,10,0" BorderBrush="#222224" BorderThickness="1">
                 <StackPanel>
                     <TextBlock Text="{Binding CountActiveSessions}" FontSize="24" FontWeight="Bold" Foreground="White" />
@@ -170,10 +170,10 @@
             <Border Background="#121214" CornerRadius="10" Padding="20" Margin="10,0,0,0" BorderBrush="#222224" BorderThickness="1">
                 <StackPanel>
                     <TextBlock Text="{Binding CountBookingsToday}" FontSize="24" FontWeight="Bold" Foreground="White" />
-                    <TextBlock Text="Заброньовані на сьогодні" FontSize="12" Foreground="#7A7A7A" Margin="0,5,0,0"/>
+                    <TextBlock Text="Активні бронювання на сьогодні" FontSize="12" Foreground="#7A7A7A" Margin="0,5,0,0"/>
                 </StackPanel>
             </Border>
-        </UniformGrid>-->
+        </UniformGrid>
             </Grid>
 
 </UserControl>

@@ -1,6 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using static PC_club.App;
 
 namespace PC_club.ViewModels
@@ -10,6 +12,9 @@ namespace PC_club.ViewModels
         // Змінна, яка зберігає поточну сторінку для відображення
         [ObservableProperty]
         private ViewModelBase _currentPage;
+
+        [ObservableProperty]
+        private bool _isHallReminderVisible;
 
         [ObservableProperty] private bool _isHomeSelected;
         [ObservableProperty] private bool _isClientsSelected;
@@ -23,6 +28,18 @@ namespace PC_club.ViewModels
             CurrentPage = new HomeViewModel();
             ResetSelection();
             IsHomeSelected = true;
+
+            var timer = new DispatcherTimer();
+
+            timer.Interval = TimeSpan.FromMinutes(1);
+
+            timer.Tick += (sender, e) =>
+            {
+                IsHallReminderVisible = true; 
+            };
+
+            // Запускаємо таймер!
+            timer.Start();
         }
 
         // --- Команди для кнопок бокового меню ---
@@ -69,6 +86,12 @@ namespace PC_club.ViewModels
             IsAccessibilitySelected = true;
         }
 
+        [RelayCommand]
+        private void CloseHallReminder()
+        {
+            IsHallReminderVisible = false;
+        }
+
         private void ResetSelection()
         {
             IsHomeSelected = false;
@@ -77,5 +100,7 @@ namespace PC_club.ViewModels
             IsBookingSelected = false;
             IsAccessibilitySelected = false;
         }
+
+
     }
 }

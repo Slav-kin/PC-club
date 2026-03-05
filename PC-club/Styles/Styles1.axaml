@@ -15,8 +15,8 @@
     </Style>
 
     <Style Selector="Button:pointerover /template/ ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource ButtonHover}"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource SecondTextHover}"></Setter>
+        <Setter Property="Background" Value="#c8b5ff"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource WhiteText}"></Setter>
     </Style>
 
     <Style Selector="Button.nav">

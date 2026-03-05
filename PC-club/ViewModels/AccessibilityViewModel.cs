@@ -17,7 +17,7 @@ namespace PC_club.ViewModels
         #region Timeline Variables
 
         [ObservableProperty]
-        private DateTime _selectedDate = DateTime.Today;
+        private DateTimeOffset? _selectedDate = DateTimeOffset.Now;
 
         [ObservableProperty]
         private ObservableCollection<PlaceTimelineRow> _timelineRows = new();
@@ -32,22 +32,19 @@ namespace PC_club.ViewModels
         [RelayCommand]
         private void PreviousDay()
         {
-            // Віднімаємо 1 день від поточної вибраної дати
-            SelectedDate = SelectedDate.AddDays(-1);
+            SelectedDate = SelectedDate?.AddDays(-1);
         }
 
         [RelayCommand]
         private void NextDay()
         {
-            // Додаємо 1 день
-            SelectedDate = SelectedDate.AddDays(1);
+            SelectedDate = SelectedDate?.AddDays(1);
         }
 
         [RelayCommand]
         private void GoToToday()
         {
-            // Повертаємо на сьогоднішній день
-            SelectedDate = DateTime.Today;
+            SelectedDate = DateTimeOffset.Now;
         }
 
         #endregion
@@ -73,17 +70,19 @@ namespace PC_club.ViewModels
             GenerateTimeline();
         }
 
-        partial void OnSelectedDateChanged(DateTime value)
+        partial void OnSelectedDateChanged(DateTimeOffset? value)
         {
             GenerateTimeline();
         }
 
         private void GenerateTimeline()
         {
+
+
             var newRows = new ObservableCollection<PlaceTimelineRow>();
 
             // Межі вибраного дня (наприклад: від 00:00 до 23:59:59)
-            DateTime dayStart = SelectedDate.Date;
+            DateTime dayStart = SelectedDate.Value.Date;
             DateTime dayEnd = dayStart.AddDays(1);
 
             // 1. Завантажуємо всі необхідні дані з БД
@@ -187,9 +186,9 @@ namespace PC_club.ViewModels
             TimelineRows = newRows;
 
             // Оновлюємо статистику у футері
-            //CountActiveSessions = activeSessions;
-            //CountTodayTotalSessions = todaySessions;
-            //CountBookingsToday = todayBookings;
+            CountActiveSessions = activeSessions;
+            CountTodayTotalSessions = todaySessions;
+            CountBookingsToday = todayBookings;
         }
     }
 }
